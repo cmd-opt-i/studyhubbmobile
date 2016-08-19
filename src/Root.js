@@ -17,7 +17,6 @@ class Root extends Component {
   }
 
   startApp = () => {
-    console.warn('hit')
     this.setState({ splash: true })
   }
 
