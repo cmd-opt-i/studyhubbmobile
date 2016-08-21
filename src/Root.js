@@ -6,6 +6,7 @@ import { store } from './store'
 import { View, Text } from 'react-native'
 import Splash from './components/Splash'
 import Profile from './containers/Profile'
+import Login from './containers/Login'
 
 class Root extends Component {
   constructor() {
@@ -17,7 +18,7 @@ class Root extends Component {
   }
 
   startApp = () => {
-    this.setState({ splash: true })
+    this.setState({ splash: false })
   }
 
   componentWillMount() {
@@ -34,7 +35,7 @@ class Root extends Component {
 
   render() {
       const { splash } = this.state
-      return splash ? this.renderRoot(Profile) : this.renderRoot(Splash)
+      return splash ? this.renderRoot(Login) : this.renderRoot(Login)
   }
 }
 
