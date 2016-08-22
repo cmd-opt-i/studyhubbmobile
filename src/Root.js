@@ -18,7 +18,7 @@ class Root extends Component {
   }
 
   startApp = () => {
-    this.setState({ splash: false })
+    this.setState({ splash: true })
   }
 
   componentWillMount() {
@@ -35,7 +35,7 @@ class Root extends Component {
 
   render() {
       const { splash } = this.state
-      return splash ? this.renderRoot(Login) : this.renderRoot(Login)
+      return splash ? this.renderRoot(Login) : this.renderRoot(Splash)
   }
 }
 

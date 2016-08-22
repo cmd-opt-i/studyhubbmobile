@@ -52,10 +52,7 @@ class Login extends Component {
         <Text style={styles.title}>Study Hubb</Text>
         <Text style={styles.para}>Find your Studdy Buddy</Text>
         <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin}>
-          <Text>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.getInfo}>
-          <Text>getInfo</Text>
+          <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
       </View>
     )
@@ -91,7 +88,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'transparent',
     height: 40,
-    width: 200
+    width: 200,
+    borderWidth: 1,
+    borderColor: '#FEFFFF',
+    borderRadius: 5
+  },
+  btnText: {
+    color: '#FEFFFF',
+    textAlign: 'center'
   }
 })
 
