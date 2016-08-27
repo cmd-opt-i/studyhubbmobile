@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import FBSDK from 'react-native-fbsdk'
 
@@ -49,8 +49,12 @@ class Login extends Component {
   render() {
     return (
       <View  style={styles.container}>
-        <Text style={styles.title}>Study Hubb</Text>
-        <Text style={styles.para}>Find your Studdy Buddy</Text>
+        <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
+        <View style={styles.textContainer}>
+          <Text style={styles.studyText}>Study</Text>
+          <Text style={styles.hubbText}>Hubb</Text>
+        </View>
+        <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
         <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
@@ -65,26 +69,39 @@ class Login extends Component {
 // blue: #1D57EE
 // white:  #FEFFFF
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#1D57EE'
   },
-  title: {
-    marginTop: 180,
-    fontSize: 40,
-    color: '#FEFFFF',
-    backgroundColor: 'transparent'
+  image: {
+    marginTop: 150,
+    width: 100,
+    height: 150
   },
-  para: {
-    color: '#FEFFFF',
+  textContainer: {
+    flexDirection: 'row'
+  },
+  studyText: {
     backgroundColor: 'transparent',
-    fontSize: 15
+    fontSize: 28,
+    color: 'white',
+    fontFamily: 'Tabarra NarrowLight'
+  },
+  hubbText: {
+    backgroundColor: 'transparent',
+    fontSize: 28,
+    color: 'white',
+    fontFamily: 'Tabarra Black'
+  },
+  studyBuddyText: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontSize: 11
   },
   btn: {
-    marginTop: 200,
+    marginTop: 140,
     justifyContent: 'center',
     backgroundColor: 'transparent',
     height: 40,

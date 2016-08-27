@@ -7,6 +7,7 @@ import { View, Text } from 'react-native'
 import Splash from './components/Splash'
 import Profile from './containers/Profile'
 import Login from './containers/Login'
+import Swipe from './containers/Swipe'
 
 class Root extends Component {
   constructor() {
@@ -35,7 +36,7 @@ class Root extends Component {
 
   render() {
       const { splash } = this.state
-      return splash ? this.renderRoot(Login) : this.renderRoot(Splash)
+      return splash ? this.renderRoot(Swipe) : this.renderRoot(Login)
   }
 }
 

@@ -27,6 +27,10 @@
 		F04E8E8C1D66C4AF00CEE05E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8B1D66C4AF00CEE05E /* FBSDKShareKit.framework */; };
 		F04E8E8E1D66C4C200CEE05E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8D1D66C4C200CEE05E /* FBSDKLoginKit.framework */; };
 		F04E8E901D66C4D700CEE05E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8F1D66C4D700CEE05E /* FBSDKCoreKit.framework */; };
+		F07B19651D7119A400B04302 /* tabarra.black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19641D7119A400B04302 /* tabarra.black.ttf */; };
+		F07B19661D7119A400B04302 /* tabarra.black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19641D7119A400B04302 /* tabarra.black.ttf */; };
+		F07B19741D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */; };
+		F07B19751D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */; };
 		F60C66AAFE5942DF97D8B04A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04959624B2AD47918AA4C002 /* libBVLinearGradient.a */; };
 /* End PBXBuildFile section */
 
@@ -153,6 +157,8 @@
 		F04E8E8B1D66C4AF00CEE05E /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		F04E8E8D1D66C4C200CEE05E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		F04E8E8F1D66C4D700CEE05E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		F07B19641D7119A400B04302 /* tabarra.black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.black.ttf; path = ../../../Downloads/tabarra.black.ttf; sourceTree = "<group>"; };
+		F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.narrowlight.ttf; path = ../../../Downloads/tabarra.narrowlight.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +328,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */,
+				F07B19641D7119A400B04302 /* tabarra.black.ttf */,
 				F04E8E8A1D66C46100CEE05E /* Frameworks */,
 				13B07FAE1A68108700A75B9A /* studyhubbmobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -585,6 +593,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F07B19661D7119A400B04302 /* tabarra.black.ttf in Resources */,
+				F07B19751D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,6 +604,8 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				F07B19651D7119A400B04302 /* tabarra.black.ttf in Resources */,
+				F07B19741D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
