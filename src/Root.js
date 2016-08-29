@@ -14,7 +14,7 @@ class Root extends Component {
     super()
 
     this.state = {
-      splash: false
+      splash: true
     }
   }
 
