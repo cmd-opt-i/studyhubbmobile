@@ -1,7 +1,6 @@
 package com.studyhubbmobile;
 
 import com.facebook.react.ReactActivity;
-import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainActivity extends ReactActivity {

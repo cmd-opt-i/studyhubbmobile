@@ -36,7 +36,7 @@ class Root extends Component {
 
   render() {
       const { splash } = this.state
-      return splash ? this.renderRoot(Swipe) : this.renderRoot(Login)
+      return splash ? this.renderRoot(Profile) : this.renderRoot(Login)
   }
 }
 
