@@ -46,15 +46,15 @@ let NoMoreCards = React.createClass({
 })
 
 const Cards = [
-  {name: '1', image: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAhRAAAAJDhlOTkyMzlhLTAxMGEtNGU1Mi1hNThlLTQ4MjIzMDA1ZmJiYw.jpg'},
-  {name: '2', image: 'https://media.giphy.com/media/irTuv1L1T34TC/giphy.gif'},
-  {name: '3', image: 'https://media.giphy.com/media/LkLL0HJerdXMI/giphy.gif'},
-  {name: '4', image: 'https://media.giphy.com/media/fFBmUMzFL5zRS/giphy.gif'},
-  {name: '5', image: 'https://media.giphy.com/media/oDLDbBgf0dkis/giphy.gif'},
-  {name: '6', image: 'https://media.giphy.com/media/7r4g8V2UkBUcw/giphy.gif'},
-  {name: '7', image: 'https://media.giphy.com/media/K6Q7ZCdLy8pCE/giphy.gif'},
+  {name: '1', image: 'https://pbs.twimg.com/profile_images/745445368859627521/ujTe7jfl_400x400.jpg'},
+  {name: '2', image: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/13248945_1782930078597567_1551630118_a.jpg'},
+  {name: '3', image: 'https://pbs.twimg.com/media/CZBWabqUQAA6vFt.jpg'},
+  {name: '4', image: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/12479298_145676829148050_1371843354_a.jpg'},
+  {name: '5', image: 'http://imd.ulximg.com/image/300x300/artist/1392853723_dd7bf404602d4647b315404d9a76a123.jpg/d6a6a346065c968a46c283c8add1f979/1392853723_frank_ocean_86.jpg'},
+  {name: '6', image: 'https://pbs.twimg.com/profile_images/585565077207678977/N_eNSBXi_400x400.jpg'},
+  {name: '7', image: 'https://pbs.twimg.com/profile_images/740059179021258752/3MHiHAo__400x400.jpg'},
   {name: '8', image: 'https://media.giphy.com/media/hEwST9KM0UGti/giphy.gif'},
-  {name: '9', image: 'https://media.giphy.com/media/3oEduJbDtIuA2VrtS0/giphy.gif'},
+  {name: '9', image: 'https://pbs.twimg.com/profile_images/718273532438966274/j0h7TkOS_400x400.jpg'},
 ]
 
 const Cards2 = [
@@ -101,11 +101,11 @@ export default React.createClass({
     return (
       <LinearGradient colors={['white', '#F4F7F7']} style={{flex: 1}}>
         <View style={{flexDirection: 'row', marginTop: 28}}>
-          <Image style={{height: 23, width: 23, position: 'absolute', left: 25, top: 10 }} source={require('../../assets/user.png')} />
-          <View style={{flexDirection: 'row', position: 'absolute', left: 145, top: 10}}>
-            <Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 18}} >Study</Text><Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 18}} >Hubb</Text>
+          <Image style={{height: 28, width: 28, position: 'absolute', left: 15, top: 10 }} source={require('../../assets/user.png')} />
+          <View style={{flexDirection: 'row', position: 'absolute', left: 120, top: 10}}>
+            <Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Study</Text><Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Hubb</Text>
           </View>
-          <Image style={{height: 23, width: 23, position: 'absolute', right: 25, top: 10}} source={require('../../assets/chat.png')} />
+          <Image style={{height: 28, width: 28, position: 'absolute', right: 15, top: 10}} source={require('../../assets/chat.png')} />
         </View>
         <SwipeCards
           cards={this.state.cards}
@@ -141,9 +141,14 @@ const styles = StyleSheet.create({
     }
   },
   thumbnail: {
-    flex: 1,
     width: 300,
-    height: 300
+    height: 300,
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRadius: 2,
+    borderColor: 'white'
   },
   text: {
     fontSize: 20,
