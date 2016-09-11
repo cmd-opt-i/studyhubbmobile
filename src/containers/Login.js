@@ -12,10 +12,18 @@ const {
   GraphRequestManager
 } = require('react-native-fbsdk');
 
+const route = {
+  type: 'push',
+  route: {
+    key: 'swipe',
+    title: 'Swipe'
+  }
+}
+
 const permissions = ['public_profile', 'email']
 class Login extends Component {
 
-  faceBookLogin() {
+  faceBookLogin(handleNavigate) {
     LoginManager.logInWithReadPermissions(permissions)
       .then(function (result) {
         if (result.isCancelled) {
@@ -31,6 +39,7 @@ class Login extends Component {
                 console.warn(JSON.stringify(error, null, 2));
               } else {
                 console.warn('DATA', JSON.stringify(result, null, 2));
+                handleNavigate(route)
               }
             }
             const infoRequest = new GraphRequest(
@@ -55,7 +64,7 @@ class Login extends Component {
           <Text style={styles.hubbText}>Hubb</Text>
         </View>
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate)}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
       </View>
@@ -73,7 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#1D57EE'
+    backgroundColor: '#28CF9B'
   },
   image: {
     marginTop: 150,

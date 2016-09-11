@@ -1,8 +1,14 @@
-'use strict'
-
-import { createStore, applyMiddleware } from 'redux'
+import { createStore } from 'redux'
 import reducers from './reducers'
-import reduxThunk from 'redux-thunk'
 
-const createStoreWithMW = applyMiddleware(reduxThunk)(createStore)
-export const store = createStoreWithMW(reducers)
+export default function configureStore () {
+  const store = createStore(reducers)
+
+if (module.hot) {
+    module.hot.accept(() => {
+      const nextRootReducer = require('./reducers/index').default
+      store.replaceReducer(nextRootReducer)
+    })
+  }
+  return store
+}
