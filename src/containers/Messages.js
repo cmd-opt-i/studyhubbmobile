@@ -80,12 +80,12 @@ class Messages extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.navIcons}>
-          <TouchableOpacity style={styles.backArrowContainer}>
+          <TouchableOpacity style={styles.backArrowContainer} onPress={this.props._goBack}>
             <Image source={require('../../assets/back.png')} style={styles.backArrow} />
           </TouchableOpacity>
           <Image source={require('../../assets/online-circle.png')} style={styles.onlineCircle} />
-          <Text style={styles.nameText}>Kendall</Text>
-          <Image style={styles.profilePic} source={{uri: 'https://pbs.twimg.com/media/CZBWabqUQAA6vFt.jpg'}}/>
+          <Text style={styles.nameText}>Michelle</Text>
+          <Image style={styles.profilePic} source={require('../../assets/girl5.jpg')}/>
         </View>
         <View style={styles.sentMessageBox}>
           <Text style={styles.sentText}>Hey how are you doing? Where would you like to study?</Text>
@@ -109,7 +109,8 @@ class Messages extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: 'white'
   },
   navIcons: {
     flexDirection: 'row',

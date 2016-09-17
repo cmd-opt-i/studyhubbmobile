@@ -1,37 +1,37 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image, ListView, TextInput, ScrollView, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, ListView, TextInput, Dimensions, TouchableOpacity } from 'react-native'
 
 const users = [
   {
-    name: 'Ziggy',
+    name: 'Michelle',
     last: 'Marley',
-    picture: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/13248945_1782930078597567_1551630118_a.jpg',
+    picture: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl5.jpg',
     time: '7:30 a.m.',
     message: 'New message',
     match: 'New Match'
   },
   {
-    name: 'Kendall',
+    name: 'Fred',
     last: 'Jenner',
-    picture: 'https://pbs.twimg.com/media/CZBWabqUQAA6vFt.jpg',
+    picture: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/guy1.jpg',
     time: '7:30 a.m.'
   },
   {
-    name: 'Bob',
+    name: 'Faith',
     last: 'Marley',
-    picture: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/12479298_145676829148050_1371843354_a.jpg',
+    picture: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl4.jpg',
     time: '7:30 a.m.'
   },
   {
-    name: 'Frank',
+    name: 'Bienne',
     last: 'Ocean',
-    picture: 'https://butisitnew.files.wordpress.com/2016/07/wp-1467477025773.jpeg?w=672&h=372&crop=1',
+    picture: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl3.jpg',
     time: '7:30 a.m.'
   },
   {
-    name: 'Gigi',
+    name: 'Kyle',
     last: 'Hadid',
-    picture: 'https://pbs.twimg.com/profile_images/745445368859627521/ujTe7jfl_400x400.jpg',
+    picture: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/guy2.jpg',
     time: '7:30 a.m.'
   },
   {
@@ -54,6 +54,14 @@ const users = [
   }
 ]
 
+const route = {
+  type: 'push',
+  route: {
+    key: 'messages',
+    title: 'Messages'
+  }
+}
+
 class Matches extends Component {
   constructor(props) {
     super(props);
@@ -64,9 +72,11 @@ class Matches extends Component {
   }
   render () {
     return (
-      <View style={{flex: 1}}>
+      <View style={styles.container}>
         <View style={styles.navIcons}>
-          <Image source={require('../../assets/gray-book.png')} style={styles.bookIcon} />
+          <TouchableOpacity style={styles.bookIconButton} onPress={this.props._goBack}>
+            <Image source={require('../../assets/gray-book.png')} style={styles.bookIcon} />
+          </TouchableOpacity>
           <Image source={require('../../assets/green-chat.png')} style={styles.chatIcon} />
         </View>
         <View style={styles.inputContainer}>
@@ -77,7 +87,7 @@ class Matches extends Component {
           style={{marginTop: 20}}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => (
-            <TouchableOpacity onPress={() => console.warn(rowData.name)} style={{height: 100, borderWidth: 1, borderColor: 'white', borderBottomColor: '#F3F3F3', backgroundColor: 'transparent', flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity onPress={this.props._handleNavigate.bind(null, route)} style={{height: 100, borderWidth: 1, borderColor: 'white', borderBottomColor: '#F3F3F3', backgroundColor: 'white', flexDirection: 'row', alignItems: 'center'}}>
                 <Image style={styles.image} source={{uri: rowData.picture}}/>
                 <Text style={{marginLeft: 10}}>{rowData.name}</Text>
                 {rowData.message ? <View style={{height: 11, overflow: 'hidden', backgroundColor: '#28CF9B', margin: 5, borderWidth: 1, borderColor: '#28CF9B', borderRadius: 2, alignItems: 'center'}}><Text style={{backgroundColor: 'transparent', fontSize: 8, color: 'white'}}>{rowData.message}</Text></View> : null}
@@ -94,7 +104,7 @@ class Matches extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'gray'
+    backgroundColor: 'white'
   },
   navIcons: {
     flexDirection: 'row',
@@ -105,9 +115,11 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F3F3F3',
     padding: 7
   },
-  bookIcon: {
+  bookIconButton: {
     position: 'absolute',
-    left: 28,
+    left: 28
+  },
+  bookIcon: {
     height: 28,
     width: 28
   },
@@ -116,7 +128,8 @@ const styles = StyleSheet.create({
     width: 30
   },
   inputContainer: {
-    marginLeft: 12
+    marginLeft: 12,
+    backgroundColor: 'white'
   },
   searchInput: {
     height: 40,

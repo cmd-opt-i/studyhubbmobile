@@ -10,6 +10,7 @@ import Login from '../containers/Login'
 import Swipe from '../containers/Swipe'
 import Matches from '../containers/Matches'
 import Messages from '../containers/Messages'
+import Settings from '../containers/Settings'
 
 class Root extends Component {
   constructor (props) {
@@ -20,13 +21,13 @@ class Root extends Component {
 
   _renderScene (props) {
     const { route } = props.scene
-    console.warn('route.key', route.key)
-    if (route.key === 'login') {
-     return <Login _handleNavigate={this._handleNavigate.bind(this)} />
-    }
-    if (route.key === 'swipe') {
-     return <Swipe _goBack={this._handleBackAction.bind(this)} />
-    }
+    if (route.key === 'login') return <Login _handleNavigate={this._handleNavigate.bind(this)} />
+    if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} />
+    if (route.key === 'swipe') return <Swipe _handleNavigate={this._handleNavigate.bind(this)} />
+    if (route.key === 'myprofile') return <MyProfile _goBack={this._handleBackAction.bind(this)} _handleNavigate={this._handleNavigate.bind(this)} />
+    if (route.key === 'profile') return <Profile _goBack={this._handleBackAction.bind(this)} />
+    if (route.key === 'messages') return <Messages _goBack={this._handleBackAction.bind(this)} />
+    if (route.key === 'matches') return <Matches _handleNavigate={this._handleNavigate.bind(this)} _goBack={this._handleBackAction.bind(this)} />
   }
 
   _handleBackAction () {
@@ -52,7 +53,6 @@ class Root extends Component {
   render() {
       return (
         <NavigationCardStack
-          direction='vertical'
           navigationState={this.props.navigation}
           onNavigate={this._handleNavigate.bind(this)}
           renderScene={this._renderScene}

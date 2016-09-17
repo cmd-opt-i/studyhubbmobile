@@ -3,6 +3,13 @@
 import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
+const route = {
+  type: 'push',
+  route: {
+    key: 'settings',
+    title: 'Settings'
+  }
+}
 
 class MyProfile extends Component {
   render() {
@@ -10,41 +17,41 @@ class MyProfile extends Component {
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
           <Image style={styles.userIcon} source={require('../../assets/green-user.png')} />
-          <Image style={styles.bookIcon} source={require('../../assets/hard-cover-book.png')} />
+          <TouchableOpacity onPress={this.props._goBack} style={{position: 'absolute', right: -160}}>
+            <Image style={styles.bookIcon} source={require('../../assets/hard-cover-book.png')} />
+          </TouchableOpacity>
         </View>
         <View style={styles.profilePicContainer}>
-          <Image style={styles.profilePic} source={{ uri: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAhRAAAAJDhlOTkyMzlhLTAxMGEtNGU1Mi1hNThlLTQ4MjIzMDA1ZmJiYw.jpg' }} />
+          <Image style={styles.profilePic} source={require('../../assets/studyhubbgirlpic1.jpg')} />
           <TouchableOpacity style={styles.editButton}>
             <Image style={styles.editButtonIcon} source={require('../../assets/pencil.png')} />
           </TouchableOpacity>
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Ryan </Text>
-            <Text style={styles.age}>| 24</Text>
+            <Text style={styles.name}>Caroline </Text>
+            <Text style={styles.age}>| 22</Text>
           </View>
         </View>
         <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginTop: -10, position: 'absolute', left: 38}}>Info</Text>
         <View style={styles.infoContainer}>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Los Angeles, CA</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>San Diego, CA</Text>
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>University of California, Los Angeles</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>University of San Diego</Text>
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/diploma.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Computer Science</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Marketing</Text>
           </View>
           <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginBottom: -7}}>About</Text>
           <View style={styles.aboutContainer}>
             <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>
-              Lorem ipsum dolor sit amet, elit soluta signiferumque eu mea, cu vim
-              luptatum maluisset? Mea an noster impedit, veniam eloquentiam concludaturque
-              quo ea, no has nobis nostrud? Sea illum ceteros te? Ad animal salutatus per.
+              Love networking, marketing is my jam, badass woman entrepreneur, Zeta Tau Alpha
             </Text>
           </View>
-          <TouchableOpacity style={styles.settingsBtn}>
+          <TouchableOpacity style={styles.settingsBtn} onPress={this.props._handleNavigate.bind(null, route)}>
             <Text style={styles.settingsBtnText}>SETTINGS</Text>
           </TouchableOpacity>
         </View>
@@ -70,9 +77,7 @@ const styles = StyleSheet.create({
   },
   bookIcon: {
     height: 26,
-    width: 26,
-    position: 'absolute',
-    right: -160
+    width: 26
   },
   profilePicContainer: {
     marginTop: 20,

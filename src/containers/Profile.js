@@ -9,15 +9,15 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
-          <TouchableOpacity>
-            <Image style={styles.closeIcon} source={require('../../assets/multiply.png')} />
+          <TouchableOpacity onPress={this.props._goBack}>
+            <Image style={styles.closeIcon} source={require('../../assets/back.png')} />
           </TouchableOpacity>
         </View>
         <View style={styles.profilePicContainer}>
-          <Image style={styles.profilePic} source={{ uri: 'https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAhRAAAAJDhlOTkyMzlhLTAxMGEtNGU1Mi1hNThlLTQ4MjIzMDA1ZmJiYw.jpg' }} />
+          <Image style={styles.profilePic} source={require('../../assets/girl2.jpg')} />
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Ryan </Text>
-            <Text style={styles.age}>| 24</Text>
+            <Text style={styles.name}>Marila </Text>
+            <Text style={styles.age}>| 23</Text>
           </View>
         </View>
         <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginTop: -10, position: 'absolute', left: 38}}>Info</Text>
@@ -28,18 +28,16 @@ class Profile extends Component {
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>University of California, Los Angeles</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Loyola Marymount University</Text>
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/diploma.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Computer Science</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Business Management</Text>
           </View>
           <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginBottom: -7}}>About</Text>
           <View style={styles.aboutContainer}>
             <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>
-              Lorem ipsum dolor sit amet, elit soluta signiferumque eu mea, cu vim
-              luptatum maluisset? Mea an noster impedit, veniam eloquentiam concludaturque
-              quo ea, no has nobis nostrud? Sea illum ceteros te? Ad animal salutatus per.
+              Looking to meet some cool people to study with! Tri Delta.
             </Text>
           </View>
         </View>
@@ -59,13 +57,13 @@ const styles = StyleSheet.create({
     marginTop: 30
   },
   closeIcon: {
-    marginTop: 20,
-    marginLeft: -150,
-    height: 28,
-    width: 28,
+    marginTop: 10,
+    marginLeft: -170,
+    height: 25,
+    width: 25,
   },
   profilePicContainer: {
-    marginTop: 20,
+    marginTop: 40,
     alignItems: 'center',
     marginBottom: 20
   },

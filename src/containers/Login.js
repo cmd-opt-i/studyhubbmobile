@@ -59,24 +59,22 @@ class Login extends Component {
     return (
       <View  style={styles.container}>
         <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
+
         <View style={styles.textContainer}>
           <Text style={styles.studyText}>Study</Text>
           <Text style={styles.hubbText}>Hubb</Text>
         </View>
+
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate)}>
+
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route))}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
+
       </View>
     )
   }
 }
-
-// green: #22CF9A
-// purple: #5931DE
-// pinkish: #F50057 #ff1744
-// blue: #1D57EE
-// white:  #FEFFFF
 
 const styles = StyleSheet.create({
   container: {

@@ -5,29 +5,60 @@
 //image url https://graph.facebook.com/774635482/picture?width=300&height=300
 
 import React, {Component} from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 import LinearGradient from 'react-native-linear-gradient'
+
+const myProfileRoute = {
+  type: 'push',
+  route: {
+    key: 'myprofile',
+    title: 'MyProfile'
+  }
+}
+
+const matchesRoute = {
+  type: 'push',
+  route: {
+    key: 'matches',
+    title: 'Matches'
+  }
+}
+
+const route = {
+  type: 'push',
+  route: {
+    key: 'profile',
+    title: 'Profile'
+  }
+}
 
 let Card = React.createClass({
   render() {
     return (
       <View style={styles.card}>
-        <Image style={styles.thumbnail} source={{uri: this.props.image}} />
+
+        <TouchableOpacity onPress={this.props._handleNavigate.bind(null, route)}>
+          <Image style={styles.thumbnail} source={{uri: this.props.image}} />
+        </TouchableOpacity>
+
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.nameText}>Ryan </Text><Text style={styles.ageText}>| 24</Text>
+          <Text style={styles.nameText}>Marila </Text><Text style={styles.ageText}>| 23</Text>
         </View>
+
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
           <Text style={{color: '#344145'}}>Los Angeles, CA</Text>
         </View>
+
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-          <Text style={{color: '#344145'}}>University of California, Los Angeles</Text>
+          <Text style={{color: '#344145'}}>Loyola Marymount University</Text>
         </View>
+
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/diploma.png')} />
-          <Text style={{color: '#344145'}}>Computer Science</Text>
+          <Text style={{color: '#344145'}}>Business Management</Text>
         </View>
 
       </View>
@@ -46,8 +77,8 @@ let NoMoreCards = React.createClass({
 })
 
 const Cards = [
-  {name: '1', image: 'https://pbs.twimg.com/profile_images/745445368859627521/ujTe7jfl_400x400.jpg'},
-  {name: '2', image: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/13248945_1782930078597567_1551630118_a.jpg'},
+  {name: '1', image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
+  {name: '2', image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
   {name: '3', image: 'https://pbs.twimg.com/media/CZBWabqUQAA6vFt.jpg'},
   {name: '4', image: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/12479298_145676829148050_1371843354_a.jpg'},
   {name: '5', image: 'http://imd.ulximg.com/image/300x300/artist/1392853723_dd7bf404602d4647b315404d9a76a123.jpg/d6a6a346065c968a46c283c8add1f979/1392853723_frank_ocean_86.jpg'},
@@ -64,7 +95,7 @@ const Cards2 = [
   {name: '13', image: 'https://media.giphy.com/media/OVHFny0I7njuU/giphy.gif'},
 ]
 
-export default React.createClass({
+const Swipe = React.createClass({
   getInitialState() {
     return {
       cards: Cards,
@@ -95,23 +126,26 @@ export default React.createClass({
       }
 
     }
-
   },
   render() {
     return (
       <LinearGradient colors={['white', '#F4F7F7']} style={{flex: 1}}>
-        <View style={{flexDirection: 'row', marginTop: 28}}>
-          <Image style={{height: 28, width: 28, position: 'absolute', left: 15, top: 10 }} source={require('../../assets/user.png')} />
-          <View style={{flexDirection: 'row', position: 'absolute', left: 120, top: 10}}>
-            <Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Study</Text><Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Hubb</Text>
-          </View>
-          <Image style={{height: 28, width: 28, position: 'absolute', right: 15, top: 10}} source={require('../../assets/chat.png')} />
+
+        <View style={{flexDirection: 'row', marginTop: 28, justifyContent: 'center'}}>
+          <Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Study</Text><Text style={{backgroundColor: 'transparent', color: '#28CF9B', fontFamily: 'Tabarra Black', fontSize: 25}} >Hubb</Text>
         </View>
+
+        <TouchableOpacity style={styles.userIconButton} onPress={this.props._handleNavigate.bind(null, myProfileRoute)}>
+          <Image style={styles.userIcon} source={require('../../assets/user.png')} />
+        </TouchableOpacity>
+        <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', height: 28, width: 28, position: 'absolute', right: 15, top: 30 }} onPress={this.props._handleNavigate.bind(null, matchesRoute)}>
+          <Image style={{height: 28, width: 28}} source={require('../../assets/chat.png')} />
+        </TouchableOpacity>
+
         <SwipeCards
           cards={this.state.cards}
           loop={false}
-
-          renderCard={(cardData) => <Card {...cardData} />}
+          renderCard={(cardData) => <Card _handleNavigate={this.props._handleNavigate} {...cardData} />}
           renderNoMoreCards={() => <NoMoreCards />}
           showYup={true}
           showNope={true}
@@ -120,6 +154,7 @@ export default React.createClass({
           handleNope={this.handleNope}
           cardRemoved={this.cardRemoved}
         />
+
       </LinearGradient>
     )
   }
@@ -175,5 +210,20 @@ const styles = StyleSheet.create({
     left: 10,
     marginTop: 15,
     fontWeight: '100'
+  },
+  userIconButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 28,
+    width: 28,
+    position: 'absolute',
+    left: 15,
+    top: 30 
+  },
+  userIcon: {
+    height: 28,
+    width: 28
   }
 })
+
+export default Swipe
