@@ -1,6 +1,7 @@
 'use strict'
 
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH } from '../constants'
+//import Firebase constant
 
 const dispatcher = (dispatch, url, type) => {
   dispatch({ type: IS_FETCHING, bool: true })
@@ -32,3 +33,13 @@ export function pop () {
     type: POP_ROUTE
   }
 }
+
+//export function to get Users
+export function getPotentialMatchs() {
+  return {
+    type: SEARCH,
+    
+}
+//export function to get Groups
+//export function to get messages
+//export function to write to messages

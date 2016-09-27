@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { View, Text, NavigationExperimental } from 'react-native'
-const { CardStack: NavigationCardStack } = NavigationExperimental
+const { CardStack: NavigationCardStack } = NavigationExperimental 
 import Splash from './Splash'
 import MyProfile from '../containers/MyProfile'
 import Profile from '../containers/Profile'
