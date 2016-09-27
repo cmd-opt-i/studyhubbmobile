@@ -15,37 +15,36 @@ const dispatcher = (dispatch, url, type) => {
 }
 
 export const fetchData = (url, type) => (
-  function (dispatch) {
+   (dispatch) => {
     dispatch(dispatch, url, type)
   }
 )
 
 /* ---------- Navigation Start ---------- */
-export function push (route) {
-  return {
-    type: PUSH_ROUTE,
-    route
-  }
-}
+export const push = (route) => ({
+  type: PUSH_ROUTE,
+  route
+})
 
-export function pop () {
-  return {
-    type: POP_ROUTE
-  }
-}
+export const pop = () => ({
+  type: POP_ROUTE
+})
 
-/* --------- Firsebase actions ----------- */
-export function getPotentialMatchs(school) {
-  return function(dispatch){
-    firebaseDB.ref('conversation', function(data) {
-      dispatch({type: SEARCH, payload: data})
-    }, function(err) {
-      console.error(err)
-    })
+/* --------- Firsebase Start ----------- */
+export const storeUserFBData = (userData) => ({
+  type: USER_FB_DATA,
+  userData
+})
 
-
-
-}
-//export function to get Groups
-//export function to get messages
-//export function to write to messages
+// export function getPotentialMatchs(school) {
+//   return function(dispatch){
+//     firebaseDB.ref('conversation', function(data) {
+//       dispatch({type: SEARCH, payload: data})
+//     }, function(err) {
+//       console.error(err)
+//     })
+//
+//
+//
+// }
+/* --------- Firsebase End ----------- */

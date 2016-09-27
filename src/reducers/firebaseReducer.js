@@ -2,7 +2,7 @@
 
 import { SEARCH } from '../constants'
 
-const FirebaseReducer = (state = {}, action) {
+const FirebaseReducer = (state = {}, action) => {
   switch (action.type) {
     case SEARCH:
       return { ...state, FirebaseMessages: action.data }

@@ -2,11 +2,15 @@
 
 // key: 5d17919caa2c330dbab13ecd96c135ea1487b153bece500809a8bd06632e6225
 // space id: bk5u40qwn7rs
-
+/* --------- Facebook Data Reducer ----------- */
 export const USER_FB_DATA = 'USER_FB_DATA'
+
+/* --------- UI Reducer ----------- */
 export const IS_FETCHING = 'IS_FETCHING'
 
+/* --------- Nav Reducer ----------- */
 export const PUSH_ROUTE = 'PUSH_ROUTE'
 export const POP_ROUTE = 'POP_ROUTE'
 
+/* --------- Firebase Reducer ----------- */
 export const SEARCH = 'SEARCH'

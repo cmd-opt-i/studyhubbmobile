@@ -4,6 +4,8 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import FBSDK from 'react-native-fbsdk'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
 const {
   LoginManager,
@@ -20,37 +22,26 @@ const route = {
   }
 }
 
-const permissions = ['public_profile', 'email']
 class Login extends Component {
 
   faceBookLogin(handleNavigate) {
-    LoginManager.logInWithReadPermissions(permissions)
-      .then(function (result) {
-        if (result.isCancelled) {
-          console.warn('login cancelled');
-        } else {
-          AccessToken.getCurrentAccessToken()
-          .then(function(data) {
-            console.warn('result', result);
-            console.warn('data from token', JSON.stringify(data, null, 2))
-            const _responseInfoCallback = (error: ?Object, result: ?Object) => {
-              console.warn('responseCallback called');
-              if (error) {
-                console.warn(JSON.stringify(error, null, 2));
-              } else {
-                console.warn('DATA', JSON.stringify(result, null, 2));
-                handleNavigate(route)
-              }
+    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+      .then(result => {
+        result.isCancelled ? console.warn('login cancelled') :
+        AccessToken.getCurrentAccessToken().then(function(data) {
+
+          const _responseInfoCallback = (error: ?Object, result: ?Object) => {
+            if (error) {
+              console.warn(JSON.stringify(error, null, 2));
             }
-            const infoRequest = new GraphRequest(
-              '/me?fields=id,name,email,picture',
-              null,
-              _responseInfoCallback,
-            );
-            new GraphRequestManager().addRequest(infoRequest).start();
-          })
-          .catch(res => console.warn(res))
-        }
+
+            console.warn('DATA', JSON.stringify(result, null, 2));
+            handleNavigate(route)
+          }
+          const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
+          new GraphRequestManager().addRequest(infoRequest).start()
+        })
+        .catch(res => console.warn('infoRequest', res))
       })
       .catch(res => console.warn(res))
   }
@@ -123,5 +114,8 @@ const styles = StyleSheet.create({
   }
 })
 
+const mapStateToProps = state => ({
+  // faceBookUserData: state.
+})
 
-export default Login
+export default connect(mapStateToProps, actions)(Login)

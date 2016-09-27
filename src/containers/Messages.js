@@ -197,7 +197,4 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps(state) {
-  {FirebaseMessages: messages}
-}
-export default connect(mapStateToProps, actions)(Messages)
+export default Messages
