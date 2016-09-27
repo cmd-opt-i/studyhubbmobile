@@ -1,7 +1,7 @@
 'use strict'
 
 import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH } from '../constants'
-//import Firebase constant
+import firebaseDB from "../firebase"
 
 const dispatcher = (dispatch, url, type) => {
   dispatch({ type: IS_FETCHING, bool: true })
@@ -35,10 +35,16 @@ export function pop () {
 }
 
 //export function to get Users
-export function getPotentialMatchs() {
-  return {
-    type: SEARCH,
-    
+export function getPotentialMatchs(school) {
+  return function(dispatch){
+    firebaseDB.ref('conversation', function(data) {
+      dispatch({type: SEARCH, payload: data})
+    }, function(err) {
+      console.error(err)
+    })
+
+
+
 }
 //export function to get Groups
 //export function to get messages
