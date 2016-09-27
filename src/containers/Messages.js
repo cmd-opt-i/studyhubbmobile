@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView } from 'react-native'
+import * as actions from "../actions/index"
 
 const messages = [
   {
@@ -196,4 +197,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Messages
+function mapStateToProps(state) {
+  {FirebaseMessages: messages}
+}
+export default connect(mapStateToProps, actions)(Messages)

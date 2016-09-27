@@ -34,7 +34,7 @@ export function pop () {
   }
 }
 
-//export function to get Users
+/* --------- Firsebase actions ----------- */
 export function getPotentialMatchs(school) {
   return function(dispatch){
     firebaseDB.ref('conversation', function(data) {
