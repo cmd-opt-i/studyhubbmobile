@@ -2,10 +2,10 @@
 
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
 import FBSDK from 'react-native-fbsdk'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import { firebaseApp } from '../../index.ios.js'
 
 const {
   LoginManager,
@@ -36,6 +36,11 @@ class Login extends Component {
             }
 
             console.warn('DATA', JSON.stringify(result, null, 2));
+            //this.props.storeUserFBData(data)
+            firebaseApp.database().ref('/users').push({
+                fbData: result,
+              })
+
             handleNavigate(route)
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
@@ -114,8 +119,4 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = state => ({
-  // faceBookUserData: state.
-})
-
-export default connect(mapStateToProps, actions)(Login)
+export default connect(null, actions)(Login)

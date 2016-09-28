@@ -1,7 +1,6 @@
 'use strict'
 
 import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH } from '../constants'
-import firebaseDB from "../firebase"
 
 const dispatcher = (dispatch, url, type) => {
   dispatch({ type: IS_FETCHING, bool: true })
