@@ -1,7 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native'
 import FBSDK from 'react-native-fbsdk'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
@@ -12,13 +12,13 @@ const {
   AccessToken,
   GraphRequest,
   GraphRequestManager
-} = require('react-native-fbsdk');
+} = require('react-native-fbsdk')
 
-const route = {
+const profileRoute = {
   type: 'push',
   route: {
-    key: 'swipe',
-    title: 'Swipe'
+    key: 'myprofile',
+    title: 'MyProfile'
   }
 }
 
@@ -42,7 +42,11 @@ class Login extends Component {
                 fbData: result,
               });
 
-            handleNavigate(route)
+              AsyncStorage.setItem('loggedIn', 'true')
+              .then(data => console.warn('login data', data))
+              .catch(err => console.warn('login', err))
+
+            handleNavigate(profileRoute)
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
           new GraphRequestManager().addRequest(infoRequest).start()
@@ -64,7 +68,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route))}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, profileRoute))}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 

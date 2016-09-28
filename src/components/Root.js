@@ -1,8 +1,8 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { View, Text, NavigationExperimental } from 'react-native'
-const { CardStack: NavigationCardStack } = NavigationExperimental 
+import { View, Text, NavigationExperimental, AsyncStorage } from 'react-native'
+const { CardStack: NavigationCardStack } = NavigationExperimental
 import Splash from './Splash'
 import MyProfile from '../containers/MyProfile'
 import Profile from '../containers/Profile'
@@ -11,6 +11,14 @@ import Swipe from '../containers/Swipe'
 import Matches from '../containers/Matches'
 import Messages from '../containers/Messages'
 import Settings from '../containers/Settings'
+
+const swipeRoute = {
+  type: 'push',
+  route: {
+    key: 'swipe',
+    title: 'Swipe'
+  }
+}
 
 class Root extends Component {
   constructor (props) {
@@ -49,6 +57,15 @@ class Root extends Component {
       default:
         return false
     }
+  }
+
+  componentDidMount() {
+      AsyncStorage.getItem('loggedIn')
+        .then(data => {
+          data === 'true' ? this._handleNavigate(swipeRoute) : null
+          console.warn('root', data)
+        })
+        .catch(err => console.warn('root err', err))
   }
   render() {
       return (
