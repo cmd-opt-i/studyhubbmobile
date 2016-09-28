@@ -37,9 +37,10 @@ class Login extends Component {
 
             console.warn('DATA', JSON.stringify(result, null, 2));
             //this.props.storeUserFBData(data)
-            firebaseApp.database().ref('/users').push({
+            firebaseApp.database().ref('/users/' + result.id).set({
+                name: result.name,
                 fbData: result,
-              })
+              });
 
             handleNavigate(route)
           }
