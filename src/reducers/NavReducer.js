@@ -8,8 +8,8 @@ const initialState = {
   index: 0,
   key: 'root',
   routes: [{
-   key: 'login',
-   title: 'Login'
+   key: 'initRoute',
+   title: 'InitRoute'
   }]
 }
 

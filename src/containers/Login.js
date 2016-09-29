@@ -14,11 +14,11 @@ const {
   GraphRequestManager
 } = require('react-native-fbsdk')
 
-const profileRoute = {
+const route = {
   type: 'push',
   route: {
-    key: 'myprofile',
-    title: 'MyProfile'
+    key: 'editprofile',
+    title: 'EditProfile'
   }
 }
 
@@ -43,17 +43,16 @@ class Login extends Component {
               });
 
               AsyncStorage.setItem('loggedIn', 'true')
-              .then(data => console.warn('login data', data))
-              .catch(err => console.warn('login', err))
+              .catch(err => console.log('login', err))
 
-            handleNavigate(profileRoute)
+            handleNavigate(route)
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
           new GraphRequestManager().addRequest(infoRequest).start()
         })
-        .catch(res => console.warn('infoRequest', res))
+        .catch(res => console.log('infoRequest', res))
       })
-      .catch(res => console.warn(res))
+      .catch(res => console.log(res))
   }
 
   render() {
@@ -68,7 +67,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, profileRoute))}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route))}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 

@@ -11,6 +11,7 @@ import Swipe from '../containers/Swipe'
 import Matches from '../containers/Matches'
 import Messages from '../containers/Messages'
 import Settings from '../containers/Settings'
+import EditProfile from '../containers/EditProfile'
 
 const swipeRoute = {
   type: 'push',
@@ -29,6 +30,8 @@ class Root extends Component {
 
   _renderScene (props) {
     const { route } = props.scene
+    if (route.key === 'initRoute') return <View style={{flex: 1, backgroundColor: '#28CF9B'}} />
+    if (route.key === 'editprofile') return <EditProfile _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'login') return <Login _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} />
     if (route.key === 'swipe') return <Swipe _handleNavigate={this._handleNavigate.bind(this)} />
@@ -59,13 +62,13 @@ class Root extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
       AsyncStorage.getItem('loggedIn')
         .then(data => {
           data === 'true' ? this._handleNavigate(swipeRoute) : null
-          console.warn('root', data)
+          console.log('root', data)
         })
-        .catch(err => console.warn('root err', err))
+        .catch(err => console.log('root err', err))
   }
   render() {
       return (

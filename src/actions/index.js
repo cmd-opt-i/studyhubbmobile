@@ -34,7 +34,6 @@ export const storeUserFBData = (userData) => ({
   type: USER_FB_DATA,
   userData
 })
-
 // export function getPotentialMatchs(school) {
 //   return function(dispatch){
 //     firebaseDB.ref('conversation', function(data) {

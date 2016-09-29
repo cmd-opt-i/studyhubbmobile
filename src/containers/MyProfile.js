@@ -11,6 +11,14 @@ const route = {
   }
 }
 
+const editProfileRoute = {
+  type: 'push',
+  route: {
+    key: 'editprofile',
+    title: 'EditProfile'
+  }
+}
+
 class MyProfile extends Component {
   render() {
     return (
@@ -23,7 +31,7 @@ class MyProfile extends Component {
         </View>
         <View style={styles.profilePicContainer}>
           <Image style={styles.profilePic} source={require('../../assets/studyhubbgirlpic1.jpg')} />
-          <TouchableOpacity style={styles.editButton}>
+          <TouchableOpacity style={styles.editButton} onPress={this.props._handleNavigate.bind(null, editProfileRoute)}>
             <Image style={styles.editButtonIcon} source={require('../../assets/pencil.png')} />
           </TouchableOpacity>
           <View style={styles.nameContainer}>
