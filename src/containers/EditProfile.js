@@ -1,5 +1,8 @@
 import React,{ Component } from 'react'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
+import { firebaseApp } from '../../index.ios'
 
 const route = {
   type: 'pop',
@@ -10,26 +13,75 @@ const route = {
 }
 
 class EditProfile extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      major: '',
+      bio: '',
+      gradYear: '',
+      age: ''
+    }
+  }
+
+  saveUser() {
+    const { major, bio, gradYear, age } = this.state
+    console.log('from saveuser', this.props);
+    const { faceBookInfo } = this.props
+    firebaseApp.database().ref('/users/' + faceBookInfo.id).set({
+      name: faceBookInfo.name,
+      age,
+      email: faceBookInfo.email,
+      major,
+      bio,
+      gradYear,
+      faceBookInfo
+    })
+  }
+
   render() {
+    console.log('editprofileprops', this.props)
     return(
       <View style={styles.container}>
         <View style={styles.navContainer}>
           <TouchableOpacity style={styles.cancelBtn} onPress={this.props._handleNavigate.bind(null, route)}>
             <Text>Cancel</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.doneBtn} onPress={this.props._handleNavigate.bind(null, route)}>
+          <Text style={styles.title}>Edit Profile</Text>
+          <TouchableOpacity style={styles.doneBtn} onPress={this.saveUser.bind(this)}>
             <Text>Done</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.topInputContainer}>
           <View style={styles.inputContainer}>
-            <TextInput style={styles.majorInput}  />
+            <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/diploma.png')} />
+            <View style={styles.bottomBorder}>
+              <TextInput placeholder='Major' style={styles.majorInput} onChangeText={text => this.setState({ major: text })} />
+            </View>
           </View>
-          <View style={styles.inputContainer}>
-            <TextInput />
+
+          <View style={[styles.inputContainer, {marginTop: 20}]}>
+            <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/information.png')} />
+            <View style={styles.bottomBorder}>
+              <TextInput placeholder='Bio' style={styles.majorInput} onChangeText={text => this.setState({ bio: text})}  />
+            </View>
           </View>
+
+          <View style={[styles.inputContainer, {marginTop: 20}]}>
+            <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/balloons.png')} />
+            <View style={styles.bottomBorder}>
+              <TextInput placeholder='Age' style={styles.majorInput} onChangeText={text => this.setState({ age: text})}  />
+            </View>
+          </View>
+
+          <View style={[styles.inputContainer, {marginTop: 20}]}>
+            <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/gradcap.png')} />
+            <View style={styles.bottomBorder}>
+              <TextInput placeholder='Graduation year' style={styles.majorInput} onChangeText={text => this.setState({ gradYear: text})}  />
+            </View>
+          </View>
+
         </View>
 
 
@@ -50,6 +102,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F3F3F3',
     padding: 7,
     height: 60,
+    justifyContent: 'center'
   },
   doneBtn: {
     position: 'absolute',
@@ -62,20 +115,38 @@ const styles = StyleSheet.create({
     right: 7,
   },
   inputContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginLeft: 20
   },
   majorInput: {
-    height: 15,
+    height: 30,
+    width: 280,
+    marginRight: -50
+  },
+  bottomBorder:{
+    width: 280,
     borderWidth: 1,
-    borderColor: 'black',
-    borderBottomColor: 'black',
-    width: 200,
-    marginLeft: 50
+    borderColor: 'white',
+    borderBottomColor: '#D4D4D4',
+    marginRight: -50
   },
   topInputContainer: {
     position: 'absolute',
-    top: 400
+    top: 100,
+    borderWidth: 1,
+    borderColor: 'white',
+    borderBottomColor: '#F3F3F3',
+    paddingBottom: 60,
+    width: 400
+  },
+  title: {
+    marginTop: 25,
   }
 })
 
-export default EditProfile
+const mapStateToProps = state => ({
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo
+});
+
+
+export default connect(mapStateToProps, actions)(EditProfile)

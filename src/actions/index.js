@@ -1,17 +1,8 @@
 'use strict'
 
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER } from '../constants'
 
-const dispatcher = (dispatch, url, type) => {
-  dispatch({ type: IS_FETCHING, bool: true })
-  fetch(url)
-    .then(response => {
-      const data = response
-      dispatch({ type: IS_FETCHING, bool: false })
-      dispatch({ type, data })
-    })
-    .catch(err => console.warn(err))
-}
+//export const saveUser = (data) => ()
 
 export const fetchData = (url, type) => (
    (dispatch) => {
@@ -20,20 +11,30 @@ export const fetchData = (url, type) => (
 )
 
 /* ---------- Navigation Start ---------- */
-export const push = (route) => ({
-  type: PUSH_ROUTE,
-  route
-})
+export const push = (route) => {
+  console.log('pushed');
+  return {
+    type: PUSH_ROUTE,
+    route
+  }
+}
 
 export const pop = () => ({
   type: POP_ROUTE
 })
 
 /* --------- Firsebase Start ----------- */
-export const storeUserFBData = (userData) => ({
-  type: USER_FB_DATA,
-  userData
-})
+export const storeUserFBData = (userData) => {
+  console.log('hit:', userData)
+  return {
+    type: USER_FB_DATA,
+    userData
+  }
+}
+
+export const storeUser = (user) => {
+
+}
 // export function getPotentialMatchs(school) {
 //   return function(dispatch){
 //     firebaseDB.ref('conversation', function(data) {

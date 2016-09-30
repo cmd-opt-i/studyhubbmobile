@@ -66,7 +66,6 @@ class Root extends Component {
       AsyncStorage.getItem('loggedIn')
         .then(data => {
           data === 'true' ? this._handleNavigate(swipeRoute) : null
-          console.log('root', data)
         })
         .catch(err => console.log('root err', err))
   }

@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'r
 import FBSDK from 'react-native-fbsdk'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { firebaseApp } from '../../index.ios.js'
+import { firebaseApp } from '../../index.ios'
 
 const {
   LoginManager,
@@ -22,30 +22,33 @@ const route = {
   }
 }
 
+
 class Login extends Component {
 
-  faceBookLogin(handleNavigate) {
+  faceBookLogin(handleNavigate, storeUserFBData) {
     LoginManager.logInWithReadPermissions(['public_profile', 'email'])
       .then(result => {
-        result.isCancelled ? console.warn('login cancelled') :
+        result.isCancelled ? console.log('login cancelled') :
         AccessToken.getCurrentAccessToken().then(function(data) {
 
           const _responseInfoCallback = (error: ?Object, result: ?Object) => {
             if (error) {
-              console.warn(JSON.stringify(error, null, 2));
+              console.log(JSON.stringify(error, null, 2));
             }
 
-            console.warn('DATA', JSON.stringify(result, null, 2));
+            console.log('DATA', JSON.stringify(result, null, 2));
             //this.props.storeUserFBData(data)
             firebaseApp.database().ref('/users/' + result.id).set({
                 name: result.name,
                 fbData: result,
               });
 
-              AsyncStorage.setItem('loggedIn', 'true')
-              .catch(err => console.log('login', err))
+              // AsyncStorage.setItem('loggedIn', 'true')
+              // .catch(err => console.log('login', err))
 
-            handleNavigate(route)
+              storeUserFBData(result)
+
+              handleNavigate(route)
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
           new GraphRequestManager().addRequest(infoRequest).start()
@@ -67,7 +70,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route))}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route),this.props.storeUserFBData)}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 

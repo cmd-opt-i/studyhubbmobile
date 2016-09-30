@@ -7,10 +7,8 @@ import NavRootContainer from './src/containers/NavRootContainer'
 import { AppRegistry } from 'react-native'
 import firebase from 'firebase'
 import firebaseConfig from './firebase.config.js'
-
+import store from './src/store'
 export const firebaseApp = firebase.initializeApp(firebaseConfig)
-
-const store = configureStore()
 
 const App = () => (
   <Provider store={store}>

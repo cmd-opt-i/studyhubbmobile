@@ -1,14 +1,7 @@
-import { createStore } from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
+import reduxThunk from 'redux-thunk'
 import reducers from './reducers'
 
-export default function configureStore () {
-  const store = createStore(reducers)
+const store = createStore(reducers, compose(applyMiddleware(reduxThunk)))
 
-if (module.hot) {
-    module.hot.accept(() => {
-      const nextRootReducer = require('./reducers/index').default
-      store.replaceReducer(nextRootReducer)
-    })
-  }
-  return store
-}
+export default store

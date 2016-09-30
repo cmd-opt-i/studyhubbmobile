@@ -1,11 +1,12 @@
 'use strict'
 
-import USER_FB_DATA from '../constants'
+import { USER_FB_DATA } from '../constants'
 
-const FacebookDataReducer = (state = {}, action) {
+const FacebookDataReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_FB_DATA:
-      return { ...state, faceBookInfo: action.data }
+    console.log('hit with data: ', action.userData);
+      return { ...state, faceBookInfo: action.userData }
   }
   return state
 }
