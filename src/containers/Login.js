@@ -22,6 +22,22 @@ const route = {
   }
 }
 
+const swipeRoute = {
+  type: 'push',
+  route: {
+    key: 'swipe',
+    title: 'Swipe'
+  }
+}
+
+const loginRoute = {
+  type: 'pop',
+  route: {
+    key: 'login',
+    title: 'Login'
+  }
+}
+
 
 class Login extends Component {
 
@@ -32,23 +48,34 @@ class Login extends Component {
         AccessToken.getCurrentAccessToken().then(function(data) {
 
           const _responseInfoCallback = (error: ?Object, result: ?Object) => {
-            if (error) {
-              console.log(JSON.stringify(error, null, 2));
-            }
+            if (error) return console.log(error)
 
-            console.log('DATA', JSON.stringify(result, null, 2));
-            //this.props.storeUserFBData(data)
-            firebaseApp.database().ref('/users/' + result.id).set({
-                name: result.name,
-                fbData: result,
-              });
+            firebaseApp.database().ref("/users/" + result.id)
+              .ref.once('value')
+              .then(snapshot => {
 
-              // AsyncStorage.setItem('loggedIn', 'true')
-              // .catch(err => console.log('login', err))
+                if (snapshot.val()) {
+                  AsyncStorage.setItem('loggedIn', 'true')
+                  .catch(err => console.log('login', err))
 
-              storeUserFBData(result)
+                  storeUserFBData(result)
+                  handleNavigate(loginRoute)
+                  handleNavigate(swipeRoute)
+                  return;
+                }
 
-              handleNavigate(route)
+                firebaseApp.database().ref('/users/' + result.id).set({
+                    name: result.name,
+                    fbData: result
+                })
+
+                AsyncStorage.setItem('loggedIn', 'true')
+                .catch(err => console.log('login', err))
+
+                storeUserFBData(result)
+                handleNavigate(loginRoute)
+                handleNavigate(route)
+              })
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
           new GraphRequestManager().addRequest(infoRequest).start()
@@ -59,6 +86,7 @@ class Login extends Component {
   }
 
   render() {
+    console.log('hit');
     return (
       <View  style={styles.container}>
         <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
@@ -70,7 +98,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate.bind(null, route),this.props.storeUserFBData)}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate ,this.props.storeUserFBData)}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 

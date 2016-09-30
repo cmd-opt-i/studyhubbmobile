@@ -1,7 +1,17 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch} from 'react-native'
+import { connect } from 'react-redux'
+import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch, AsyncStorage } from 'react-native'
+import * as actions from '../actions'
 
 const someData = [1,2,3,4,5,6,7,7,8,8,9,9]
+
+const route = {
+  type: 'push',
+  route: {
+    key: 'login',
+    title: 'Login'
+  }
+}
 
 class Settings extends Component {
   constructor (props) {
@@ -14,7 +24,15 @@ class Settings extends Component {
 
   }
 
+  signOut() {
+    AsyncStorage.removeItem('loggedIn')
+    .catch(err => console.log('login', err))
+
+    this.props.popLogin()
+  }
+
   render () {
+    console.log('settings', this.props);
     return (
         <View style={styles.container}>
           <View style={styles.settingsHeader}>
@@ -48,7 +66,7 @@ class Settings extends Component {
             </View>
           </ScrollView>
           <View style={styles.btnContianer}>
-            <TouchableOpacity style={styles.btn}>
+            <TouchableOpacity onPress={this.signOut.bind(this)} style={styles.btn}>
               <Text style={styles.btnText}>Logout</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.btn, { backgroundColor: '#E92E49', borderColor:'red' }]}>
@@ -135,4 +153,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Settings
+const mapStateToProps = state => ({
+  navigation: state.NavReducer
+})
+
+export default connect(mapStateToProps, actions)(Settings)

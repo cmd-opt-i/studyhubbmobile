@@ -33,7 +33,7 @@ class Root extends Component {
     if (route.key === 'initRoute') return <View style={{flex: 1, backgroundColor: '#28CF9B'}} />
     if (route.key === 'editprofile') return <EditProfile _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'login') return <Login _handleNavigate={this._handleNavigate.bind(this)} />
-    if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} />
+    if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'swipe') return <Swipe _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'myprofile') return <MyProfile _goBack={this._handleBackAction.bind(this)} _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'profile') return <Profile _goBack={this._handleBackAction.bind(this)} />

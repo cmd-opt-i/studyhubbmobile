@@ -1,6 +1,6 @@
 'use strict'
 
-import { PUSH_ROUTE, POP_ROUTE } from '../constants'
+import { PUSH_ROUTE, POP_ROUTE, RESET_ROUTE_STATE } from '../constants'
 import { NavigationExperimental } from 'react-native'
 const { StateUtils } = NavigationExperimental
 
@@ -17,6 +17,7 @@ function NavReducer (state = initialState, action) {
   switch (action.type) {
 
     case PUSH_ROUTE:
+    console.log('git, pushRoute');
       if (state.routes[state.index].key === (action.route && action.route.key)) return state
     return StateUtils.push(state, action.route)
 
@@ -24,6 +25,8 @@ function NavReducer (state = initialState, action) {
       if (state.index === 0 || state.routes.length === 1) return state
       return StateUtils.pop(state)
 
+    case RESET_ROUTE_STATE:
+      return initialState
    default:
      return state
 

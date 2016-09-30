@@ -1,7 +1,7 @@
 import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, DeviceEventEmitter, Animated, Keyboard } from 'react-native'
 import { firebaseApp } from '../../index.ios'
 
 const route = {
@@ -17,10 +17,7 @@ class EditProfile extends Component {
     super(props)
 
     this.state = {
-      major: '',
-      bio: '',
-      gradYear: '',
-      age: ''
+      keyboardOffset: new Animated.Value(0),
     }
   }
 
@@ -37,6 +34,37 @@ class EditProfile extends Component {
       gradYear,
       faceBookInfo
     })
+    this.props.handleNavigate(route)
+  }
+
+  keyboardWillShow(e) {
+    Animated.spring(this.state.keyboardOffset, {
+      toValue: e.endCoordinates.height,
+      friction: 6
+    }).start();
+  }
+
+  keyboardWillHide(e) {
+    Animated.spring(this.state.keyboardOffset, {
+      toValue: 0,
+      friction: 6
+    }).start();
+  }
+
+  componentWillMount () {
+
+    console.log('componentWillMount', this.props);
+
+    keyboardWillShowSubscription = Keyboard
+      .addListener('keyboardWillShow', (e) => this.keyboardWillShow(e));
+
+    keyboardWillHideSubscription = Keyboard
+      .addListener('keyboardWillHide', (e) => this.keyboardWillHide(e));
+  }
+
+  componentWillUnmount() {
+    keyboardWillShowSubscription.remove();
+    keyboardWillHideSubscription.remove();
   }
 
   render() {

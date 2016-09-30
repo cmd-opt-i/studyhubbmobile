@@ -13,6 +13,6 @@ export const IS_FETCHING = 'IS_FETCHING'
 /* --------- Nav Reducer ----------- */
 export const PUSH_ROUTE = 'PUSH_ROUTE'
 export const POP_ROUTE = 'POP_ROUTE'
-
+export const RESET_ROUTE_STATE = 'RESET_ROUTE_STATE'
 /* --------- Firebase Reducer ----------- */
 export const SEARCH = 'SEARCH'
