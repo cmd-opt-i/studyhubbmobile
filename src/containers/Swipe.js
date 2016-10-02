@@ -5,6 +5,8 @@
 //image url https://graph.facebook.com/774635482/picture?width=300&height=300
 
 import React, {Component} from 'react'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import SwipeCards from 'react-native-swipe-cards';
 import LinearGradient from 'react-native-linear-gradient'
@@ -128,6 +130,7 @@ const Swipe = React.createClass({
     }
   },
   render() {
+    console.log('props from swipe', this.props);
     return (
       <LinearGradient colors={['white', '#F4F7F7']} style={{flex: 1}}>
 
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     width: 28,
     position: 'absolute',
     left: 15,
-    top: 30 
+    top: 30
   },
   userIcon: {
     height: 28,
@@ -226,4 +229,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Swipe
+const mapStateToProps = state => ({
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo
+})
+
+export default connect(mapStateToProps, actions)(Swipe)

@@ -1,8 +1,10 @@
 'use strict'
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, NavigationExperimental, AsyncStorage } from 'react-native'
 const { CardStack: NavigationCardStack } = NavigationExperimental
+import * as actions from '../actions'
 import Splash from './Splash'
 import MyProfile from '../containers/MyProfile'
 import Profile from '../containers/Profile'
@@ -12,6 +14,7 @@ import Matches from '../containers/Matches'
 import Messages from '../containers/Messages'
 import Settings from '../containers/Settings'
 import EditProfile from '../containers/EditProfile'
+import { firebaseApp } from '../../index.ios'
 
 const swipeRoute = {
   type: 'push',
@@ -30,7 +33,6 @@ class Root extends Component {
 
   _renderScene (props) {
     const { route } = props.scene
-    if (route.key === 'initRoute') return <View style={{flex: 1, backgroundColor: '#28CF9B'}} />
     if (route.key === 'editprofile') return <EditProfile _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'login') return <Login _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} _handleNavigate={this._handleNavigate.bind(this)} />
@@ -65,7 +67,15 @@ class Root extends Component {
   componentWillMount() {
       AsyncStorage.getItem('loggedIn')
         .then(data => {
-          data === 'true' ? this._handleNavigate(swipeRoute) : null
+          console.log('this is item loggedIn from root', data);
+          if (data) {
+            firebaseApp.database().ref("/users/" + data)
+              .ref.once('value')
+              .then(snapshot => {
+                this.props.storeUserFBData(snapshot.val())
+                this._handleNavigate(swipeRoute)
+              })
+          }
         })
         .catch(err => console.log('root err', err))
   }
@@ -80,4 +90,4 @@ class Root extends Component {
   }
 }
 
-export default Root
+export default connect(null, actions)(Root)

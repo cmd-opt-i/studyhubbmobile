@@ -32,9 +32,6 @@ export const storeUserFBData = (userData) => {
   }
 }
 
-export const storeUser = (user) => {
-
-}
 // export function getPotentialMatchs(school) {
 //   return function(dispatch){
 //     firebaseDB.ref('conversation', function(data) {

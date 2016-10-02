@@ -1,11 +1,18 @@
 import React,{ Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, DeviceEventEmitter, Animated, Keyboard } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, DeviceEventEmitter, Animated, Keyboard, AsyncStorage } from 'react-native'
 import { firebaseApp } from '../../index.ios'
 
 const route = {
-  type: 'pop',
+  type: 'push',
+  route: {
+    key: 'myprofile',
+    title: 'MyProfile'
+  }
+}
+const onBoardingRoute = {
+  type: 'push',
   route: {
     key: 'myprofile',
     title: 'MyProfile'
@@ -18,14 +25,29 @@ class EditProfile extends Component {
 
     this.state = {
       keyboardOffset: new Animated.Value(0),
+      major: this.props.faceBookInfo.major || '',
+      bio: this.props.faceBookInfo.bio || '',
+      gradYear: this.props.faceBookInfo.gradYear || '',
+      age: this.props.faceBookInfo.age || ''
     }
+  }
+
+  getUserData (id) {
+    console.log('getUserData func id:', id);
+    firebaseApp.database().ref("/users/" + id)
+      .ref.once('value')
+      .then(snapshot => {
+        this.props.storeUserFBData(snapshot.val())
+      }).catch(err => console.log(err))
   }
 
   saveUser() {
     const { major, bio, gradYear, age } = this.state
-    console.log('from saveuser', this.props);
-    const { faceBookInfo } = this.props
+    const { faceBookInfo, storeUserFBData } = this.props
+
+    console.log('faceBookInfo from editprofile', faceBookInfo);
     firebaseApp.database().ref('/users/' + faceBookInfo.id).set({
+      id: faceBookInfo.id,
       name: faceBookInfo.name,
       age,
       email: faceBookInfo.email,
@@ -34,7 +56,37 @@ class EditProfile extends Component {
       gradYear,
       faceBookInfo
     })
-    this.props.handleNavigate(route)
+
+    AsyncStorage.getItem('on boarding')
+      .then(data => {
+        if (data) {
+          AsyncStorage.removeItem('on boarding')
+          .then(data => {
+            this.getUserData(faceBookInfo.id)
+            this.props.pop()
+            this.props._handleNavigate(onBoardingRoute)
+          })
+          .catch(err => console.log('login', err))
+        } else {
+          this.getUserData(faceBookInfo.id)
+          this.props.pop()
+          this.props._handleNavigate(route)
+        }
+      })
+  }
+
+  cancelEdit () {
+    AsyncStorage.getItem('on boarding')
+      .then(data => {
+        console.log('if onBoarding',data);
+        if (data) {
+        } else {
+          console.log('else onBoarding', data);
+          this.props.pop()
+          this.props._handleNavigate(route)
+        }
+      })
+
   }
 
   keyboardWillShow(e) {
@@ -52,9 +104,6 @@ class EditProfile extends Component {
   }
 
   componentWillMount () {
-
-    console.log('componentWillMount', this.props);
-
     keyboardWillShowSubscription = Keyboard
       .addListener('keyboardWillShow', (e) => this.keyboardWillShow(e));
 
@@ -72,7 +121,7 @@ class EditProfile extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.navContainer}>
-          <TouchableOpacity style={styles.cancelBtn} onPress={this.props._handleNavigate.bind(null, route)}>
+          <TouchableOpacity style={styles.cancelBtn} onPress={this.cancelEdit.bind(this)}>
             <Text>Cancel</Text>
           </TouchableOpacity>
           <Text style={styles.title}>Edit Profile</Text>
@@ -85,28 +134,28 @@ class EditProfile extends Component {
           <View style={styles.inputContainer}>
             <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/diploma.png')} />
             <View style={styles.bottomBorder}>
-              <TextInput placeholder='Major' style={styles.majorInput} onChangeText={text => this.setState({ major: text })} />
+              <TextInput placeholder={this.props.faceBookInfo.major || 'Major'} style={styles.majorInput} onChangeText={text => this.setState({ major: text })} />
             </View>
           </View>
 
           <View style={[styles.inputContainer, {marginTop: 20}]}>
             <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/information.png')} />
             <View style={styles.bottomBorder}>
-              <TextInput placeholder='Bio' style={styles.majorInput} onChangeText={text => this.setState({ bio: text})}  />
+              <TextInput placeholder={this.props.faceBookInfo.bio || 'Bio'} style={styles.majorInput} onChangeText={text => this.setState({ bio: text})}  />
             </View>
           </View>
 
           <View style={[styles.inputContainer, {marginTop: 20}]}>
             <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/balloons.png')} />
             <View style={styles.bottomBorder}>
-              <TextInput placeholder='Age' style={styles.majorInput} onChangeText={text => this.setState({ age: text})}  />
+              <TextInput placeholder={this.props.faceBookInfo.age || 'Age'} style={styles.majorInput} onChangeText={text => this.setState({ age: text})}  />
             </View>
           </View>
 
           <View style={[styles.inputContainer, {marginTop: 20}]}>
             <Image style={{height: 25, width: 25, marginRight: 15, marginBottom: -3}} source={require('../../assets/gradcap.png')} />
             <View style={styles.bottomBorder}>
-              <TextInput placeholder='Graduation year' style={styles.majorInput} onChangeText={text => this.setState({ gradYear: text})}  />
+              <TextInput placeholder={this.props.faceBookInfo.gradYear || 'Graduation year'} style={styles.majorInput} onChangeText={text => this.setState({ gradYear: text})}  />
             </View>
           </View>
 

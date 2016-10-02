@@ -30,15 +30,6 @@ const swipeRoute = {
   }
 }
 
-const loginRoute = {
-  type: 'pop',
-  route: {
-    key: 'login',
-    title: 'Login'
-  }
-}
-
-
 class Login extends Component {
 
   faceBookLogin(handleNavigate, storeUserFBData) {
@@ -53,28 +44,25 @@ class Login extends Component {
             firebaseApp.database().ref("/users/" + result.id)
               .ref.once('value')
               .then(snapshot => {
-
+                console.log('from inside login', snapshot.val());
                 if (snapshot.val()) {
-                  AsyncStorage.setItem('loggedIn', 'true')
+                  AsyncStorage.setItem('loggedIn', result.id)
+                  .catch(err => console.log('login', err))
+
+                  storeUserFBData(snapshot.val())
+                  handleNavigate(swipeRoute)
+                } else {
+                  firebaseApp.database().ref('/users/' + result.id).set({
+                      name: result.name,
+                      fbData: result
+                  })
+
+                  AsyncStorage.multiSet([['loggedIn', result.id], ['on boarding', 'true']])
                   .catch(err => console.log('login', err))
 
                   storeUserFBData(result)
-                  handleNavigate(loginRoute)
-                  handleNavigate(swipeRoute)
-                  return;
+                  handleNavigate(route)
                 }
-
-                firebaseApp.database().ref('/users/' + result.id).set({
-                    name: result.name,
-                    fbData: result
-                })
-
-                AsyncStorage.setItem('loggedIn', 'true')
-                .catch(err => console.log('login', err))
-
-                storeUserFBData(result)
-                handleNavigate(loginRoute)
-                handleNavigate(route)
               })
           }
           const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
@@ -98,7 +86,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate ,this.props.storeUserFBData)}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate , this.props.storeUserFBData)}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 

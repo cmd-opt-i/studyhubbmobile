@@ -27,7 +27,6 @@ class Settings extends Component {
   signOut() {
     AsyncStorage.removeItem('loggedIn')
     .catch(err => console.log('login', err))
-
     this.props.popLogin()
   }
 

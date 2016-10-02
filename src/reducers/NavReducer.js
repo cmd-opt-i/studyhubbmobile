@@ -17,7 +17,6 @@ function NavReducer (state = initialState, action) {
   switch (action.type) {
 
     case PUSH_ROUTE:
-    console.log('git, pushRoute');
       if (state.routes[state.index].key === (action.route && action.route.key)) return state
     return StateUtils.push(state, action.route)
 
