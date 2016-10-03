@@ -1,15 +1,15 @@
 'use strict';
-
-//our colors: ['#1A354A', '#226065', '#277D7B']
-
 //image url https://graph.facebook.com/774635482/picture?width=300&height=300
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import SwipeCards from 'react-native-swipe-cards';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import SwipeCards from 'react-native-swipe-cards'
 import LinearGradient from 'react-native-linear-gradient'
+import Spinner from 'react-native-spinkit'
+import Card from '../components/Card'
+import { firebaseApp } from '../../index.ios'
 
 const myProfileRoute = {
   type: 'push',
@@ -35,100 +35,32 @@ const route = {
   }
 }
 
-let Card = React.createClass({
-  render() {
-    return (
-      <View style={styles.card}>
-
-        <TouchableOpacity onPress={this.props._handleNavigate.bind(null, route)}>
-          <Image style={styles.thumbnail} source={{uri: this.props.image}} />
-        </TouchableOpacity>
-
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.nameText}>Marila </Text><Text style={styles.ageText}>| 23</Text>
-        </View>
-
-        <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
-          <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-          <Text style={{color: '#344145'}}>Los Angeles, CA</Text>
-        </View>
-
-        <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
-          <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-          <Text style={{color: '#344145'}}>Loyola Marymount University</Text>
-        </View>
-
-        <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
-          <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/diploma.png')} />
-          <Text style={{color: '#344145'}}>Business Management</Text>
-        </View>
-
-      </View>
-    )
-  }
-})
-
-let NoMoreCards = React.createClass({
-  render() {
-    return (
-      <View style={styles.noMoreCards}>
-        <Text>No more cards</Text>
-      </View>
-    )
-  }
-})
-
 const Cards = [
-  {name: '1', image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
-  {name: '2', image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
-  {name: '3', image: 'https://pbs.twimg.com/media/CZBWabqUQAA6vFt.jpg'},
-  {name: '4', image: 'https://scontent-lax3-1.cdninstagram.com/t51.2885-19/s320x320/12479298_145676829148050_1371843354_a.jpg'},
-  {name: '5', image: 'http://imd.ulximg.com/image/300x300/artist/1392853723_dd7bf404602d4647b315404d9a76a123.jpg/d6a6a346065c968a46c283c8add1f979/1392853723_frank_ocean_86.jpg'},
-  {name: '6', image: 'https://pbs.twimg.com/profile_images/585565077207678977/N_eNSBXi_400x400.jpg'},
-  {name: '7', image: 'https://pbs.twimg.com/profile_images/740059179021258752/3MHiHAo__400x400.jpg'},
-  {name: '8', image: 'https://media.giphy.com/media/hEwST9KM0UGti/giphy.gif'},
-  {name: '9', image: 'https://pbs.twimg.com/profile_images/718273532438966274/j0h7TkOS_400x400.jpg'},
+  {image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
+  {image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg', info: {data: 'data'}},
 ]
 
-const Cards2 = [
-  {name: '10', image: 'https://media.giphy.com/media/12b3E4U9aSndxC/giphy.gif'},
-  {name: '11', image: 'https://media4.giphy.com/media/6csVEPEmHWhWg/200.gif'},
-  {name: '12', image: 'https://media4.giphy.com/media/AA69fOAMCPa4o/200.gif'},
-  {name: '13', image: 'https://media.giphy.com/media/OVHFny0I7njuU/giphy.gif'},
-]
-
-const Swipe = React.createClass({
-  getInitialState() {
-    return {
-      cards: Cards,
-      outOfCards: false
+class Swipe extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cards: Cards
     }
-  },
+  }
+
+  componentWillMount() {
+    this.props.isFetching(true)
+    this.props.getAllUsers(this.props.faceBookInfo.id)
+  }
+
   handleYup (card) {
-    console.log("yup")
-  },
+    console.log("yup:", card)
+  }
+
   handleNope (card) {
-    console.log("nope")
-  },
-  cardRemoved (index) {
-    console.log(`The index is ${index}`);
+    console.log("nope:", card)
+  }
 
-    let CARD_REFRESH_LIMIT = 3
-
-    if (this.state.cards.length - index <= CARD_REFRESH_LIMIT + 1) {
-      console.log(`There are only ${this.state.cards.length - index - 1} cards left.`);
-
-      if (!this.state.outOfCards) {
-        console.log(`Adding ${Cards2.length} more cards`)
-
-        this.setState({
-          cards: this.state.cards.concat(Cards2),
-          outOfCards: true
-        })
-      }
-
-    }
-  },
   render() {
     console.log('props from swipe', this.props);
     return (
@@ -144,24 +76,21 @@ const Swipe = React.createClass({
         <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', height: 28, width: 28, position: 'absolute', right: 15, top: 30 }} onPress={this.props._handleNavigate.bind(null, matchesRoute)}>
           <Image style={{height: 28, width: 28}} source={require('../../assets/chat.png')} />
         </TouchableOpacity>
-
-        <SwipeCards
-          cards={this.state.cards}
-          loop={false}
-          renderCard={(cardData) => <Card _handleNavigate={this.props._handleNavigate} {...cardData} />}
-          renderNoMoreCards={() => <NoMoreCards />}
+        {this.props.fetching ? <View style={styles.spinner}><Spinner isVisible={true} size={100} color={'#21CE99'} type={'ChasingDots'}/></View>
+        : <SwipeCards
+          cards={this.props.allUsers}
+          loop={true}
+          renderCard={(cardData) => <Card _handleNavigate={this.props._handleNavigate} route={route} {...cardData} />}
           showYup={true}
           showNope={true}
-
           handleYup={this.handleYup}
           handleNope={this.handleNope}
-          cardRemoved={this.cardRemoved}
-        />
+        />}
 
       </LinearGradient>
     )
   }
-})
+}
 
 const styles = StyleSheet.create({
   card: {
@@ -177,6 +106,11 @@ const styles = StyleSheet.create({
       height: 2,
       width: 1,
     }
+  },
+  spinner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   thumbnail: {
     width: 300,
@@ -230,7 +164,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  faceBookInfo: state.FacebookDataReducer.faceBookInfo
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo,
+  allUsers: state.FirebaseReducer.allUsers,
+  fetching: state.UIReducer.fetching
 })
 
 export default connect(mapStateToProps, actions)(Swipe)

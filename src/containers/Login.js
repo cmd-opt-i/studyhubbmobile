@@ -52,15 +52,18 @@ class Login extends Component {
                   storeUserFBData(snapshot.val())
                   handleNavigate(swipeRoute)
                 } else {
+                  var date = new Date() + ''
                   firebaseApp.database().ref('/users/' + result.id).set({
                       name: result.name,
-                      fbData: result
+                      fbData: result,
+                      date
                   })
-
+                  var faceBookObject = result
+                  faceBookObject.date = date
                   AsyncStorage.multiSet([['loggedIn', result.id], ['on boarding', 'true']])
                   .catch(err => console.log('login', err))
 
-                  storeUserFBData(result)
+                  storeUserFBData(faceBookObject)
                   handleNavigate(route)
                 }
               })

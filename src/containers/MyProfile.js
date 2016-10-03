@@ -1,6 +1,7 @@
 'use strict'
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 const route = {
@@ -21,6 +22,8 @@ const editProfileRoute = {
 
 class MyProfile extends Component {
   render() {
+    const { faceBookInfo } = this.props
+    const profilePic = faceBookInfo.faceBookInfo.picture.data.url
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
@@ -29,40 +32,45 @@ class MyProfile extends Component {
             <Image style={styles.bookIcon} source={require('../../assets/hard-cover-book.png')} />
           </TouchableOpacity>
         </View>
+
         <View style={styles.profilePicContainer}>
-          <Image style={styles.profilePic} source={require('../../assets/studyhubbgirlpic1.jpg')} />
+          <Image style={styles.profilePic} source={{uri: profilePic}} />
           <TouchableOpacity style={styles.editButton} onPress={this.props._handleNavigate.bind(null, editProfileRoute)}>
             <Image style={styles.editButtonIcon} source={require('../../assets/pencil.png')} />
           </TouchableOpacity>
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Caroline </Text>
+            <Text style={styles.name}>{faceBookInfo.name.split(' ')[0]} </Text>
             <Text style={styles.age}>| 22</Text>
           </View>
         </View>
+
         <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginTop: -10, position: 'absolute', left: 38}}>Info</Text>
         <View style={styles.infoContainer}>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
             <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>San Diego, CA</Text>
           </View>
+
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
             <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>University of San Diego</Text>
           </View>
+
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/diploma.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Marketing</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookInfo.major}</Text>
           </View>
+
           <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginBottom: -7}}>About</Text>
           <View style={styles.aboutContainer}>
-            <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>
-              Love networking, marketing is my jam, badass woman entrepreneur, Zeta Tau Alpha
-            </Text>
+            <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>{faceBookInfo.bio}</Text>
           </View>
+
           <TouchableOpacity style={styles.settingsBtn} onPress={this.props._handleNavigate.bind(null, route)}>
             <Text style={styles.settingsBtnText}>SETTINGS</Text>
           </TouchableOpacity>
         </View>
+
       </View>
     )
   }
@@ -194,4 +202,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default MyProfile
+const mapStateToProps = state => ({
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo
+})
+
+export default connect(mapStateToProps, null)(MyProfile)

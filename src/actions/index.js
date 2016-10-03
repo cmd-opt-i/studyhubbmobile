@@ -1,6 +1,8 @@
 'use strict'
 
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS } from '../constants'
+import { firebaseApp } from '../../index.ios'
+
 
 export const fetchData = (url, type) => (
    (dispatch) => {
@@ -15,6 +17,11 @@ export const push = (route) => {
     route
   }
 }
+
+export const isFetching = fetching => ({
+    type: IS_FETCHING,
+    fetching
+})
 
 export const pop = () => ({
   type: POP_ROUTE
@@ -32,15 +39,27 @@ export const storeUserFBData = (userData) => {
   }
 }
 
-// export function getPotentialMatchs(school) {
-//   return function(dispatch){
-//     firebaseDB.ref('conversation', function(data) {
-//       dispatch({type: SEARCH, payload: data})
-//     }, function(err) {
-//       console.error(err)
-//     })
-//
-//
-//
-// }
-/* --------- Firsebase End ----------- */
+const setAllUsers = users => ({
+  type: GET_ALL_USERS,
+  allUsers: users
+})
+
+export const getAllUsers = id => (
+  dispatch => (
+    firebaseApp.database().ref("/users")
+      .ref.once('value')
+      .then(snapshot => {
+        const allUsers = snapshot.val()
+        const result = []
+
+        for(let key in allUsers) {
+          if(JSON.parse(allUsers[key].id) !== JSON.parse(id)) {
+            result.push({ image: allUsers[key].faceBookInfo.picture, info: allUsers[key] })
+          }
+        }
+        dispatch(isFetching(false))
+        dispatch(setAllUsers(result))
+      })
+      .catch(err => console.log(err))
+  )
+)

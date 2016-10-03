@@ -1,6 +1,7 @@
 package com.studyhubbmobile;
 
 import com.facebook.react.ReactActivity;
+import com.react.rnspinkit.RNSpinkitPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 
 public class MainActivity extends ReactActivity {

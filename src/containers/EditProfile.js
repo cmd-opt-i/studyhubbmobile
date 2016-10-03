@@ -54,7 +54,9 @@ class EditProfile extends Component {
       major,
       bio,
       gradYear,
-      faceBookInfo
+      faceBookInfo,
+      swipes: {1234: 'test user'},
+      matches: {1234: 'test user'}
     })
 
     AsyncStorage.getItem('on boarding')
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   faceBookInfo: state.FacebookDataReducer.faceBookInfo
-});
+})
 
 
 export default connect(mapStateToProps, actions)(EditProfile)
