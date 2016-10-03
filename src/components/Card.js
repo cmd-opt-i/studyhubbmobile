@@ -9,7 +9,7 @@ const Card = props => (
     </TouchableOpacity>
 
     <View style={{flexDirection: 'row'}}>
-      <Text style={styles.nameText}>Marila </Text><Text style={styles.ageText}>| 23</Text>
+      <Text style={styles.nameText}>{props.info.faceBookInfo.name} </Text><Text style={styles.ageText}>| {props.info.age}</Text>
     </View>
 
     <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
@@ -24,7 +24,7 @@ const Card = props => (
 
     <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
       <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/diploma.png')} />
-      <Text style={{color: '#344145'}}>Business Management</Text>
+      <Text style={{color: '#344145'}}>{props.info.major}</Text>
     </View>
 
   </View>

@@ -35,17 +35,9 @@ const route = {
   }
 }
 
-const Cards = [
-  {image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg'},
-  {image: '/Users/freddiecabrera/Desktop/studyhubbmobile/assets/girl2.jpg', info: {data: 'data'}},
-]
-
 class Swipe extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      cards: Cards
-    }
   }
 
   componentWillMount() {

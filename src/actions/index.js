@@ -57,6 +57,7 @@ export const getAllUsers = id => (
             result.push({ image: allUsers[key].faceBookInfo.picture, info: allUsers[key] })
           }
         }
+
         dispatch(isFetching(false))
         dispatch(setAllUsers(result))
       })
