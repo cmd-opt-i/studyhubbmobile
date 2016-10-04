@@ -47,23 +47,24 @@ class Swipe extends Component {
   }
 
   checkForMatch(card) {
-    console.log('from checkForMatch()', card);
     const myID = this.props.faceBookInfo.id
     const theirID = card.info.faceBookInfo.id
     const myData = this.props.faceBookInfo
 
     if (card.info.swipes[myID]) {
       //add their info to my shit
-      firebaseApp.database().ref(`/users/${myID}/matches/${theirID}`).set({
-          status: 'new', match: card.info
+      firebaseApp.database().ref(`/users/${myID}/matches/${theirID}`).update({
+          status: 'new',
+          picture: card.image,
+          name: card.info.faceBookInfo.name
           //this is where we send the push notification
           // or do a cool modal or somethin
       })
-      myData.matches.thierId = { status: 'new', match: card.info }
-
       //add my info to their shit
-      firebaseApp.database().ref(`/users/${theirID}/matches/${myID}`).push({
-          status: 'new', match: this.props.faceBookInfo
+      firebaseApp.database().ref(`/users/${theirID}/matches/${myID}`).update({
+          status: 'new',
+          picture: myData.faceBookInfo.picture.data.url,
+          name: myData.faceBookInfo.name
       })
 
       //remove their id from my swipes
@@ -72,30 +73,37 @@ class Swipe extends Component {
         .catch(err => console.log('err', err))
         const newSwipes = {}
         for(let key in myData.swipes) {
-          if (myData.swipes.thierId) {
-            //dont do nothing
-          } else {
-            newSwipes[key] = myData.swipes[key]
-          }
+          myData.swipes.theirID ? null : newSwipes[key] = myData.swipes[key]
         }
-
-        myData.swipes = newSwipes
 
       //remove my id from their swipes
       firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
         .then(() => console.log('successfully removed'))
         .catch(err => console.log('err', err))
+        
+        firebaseApp.database().ref(`/users/${myID}`)
+          .ref.once('value')
+          .then(snapshot => {
+            this.props.storeUserFBData(snapshot.val())
+          })
+    } else {
+      //stre their id in myswipes
+      firebaseApp.database().ref(`/users/${myID}/swipes`).update({
+        [theirID]: theirID
+      })
     }
-    this.props.storeUserFBData(myData)
   }
 
   handleYup (card) {
     this.checkForMatch(card)
-    console.log("yup:", this)
+    console.log("yup:", card)
   }
 
   handleNope (card) {
-    
+    const theirID = card.info.faceBookInfo.id
+    const myID = this.props.faceBookInfo.id
+
+    firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
     //check if my id is in their swipes
     //if it is remove that shit
     console.log("nope:", card)
