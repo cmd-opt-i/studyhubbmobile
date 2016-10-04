@@ -46,23 +46,24 @@ class Swipe extends Component {
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
-  checkForMatch() {
+  checkForMatch(card) {
+    console.log('from checkForMatch()', card);
     const myID = this.props.faceBookInfo.id
-    const theirID = this.props.info.faceBookInfo.id
-    const myData = this.props.faceBookLogin
+    const theirID = card.info.faceBookInfo.id
+    const myData = this.props.faceBookInfo
 
-    if (this.props.info.swipes[myID]) {
+    if (card.info.swipes[myID]) {
       //add their info to my shit
-      firebaseApp.database().ref(`/users/${myID}/matches`).push({
-          theirID: { status: 'new', match: this.props.info }
+      firebaseApp.database().ref(`/users/${myID}/matches/${theirID}`).set({
+          status: 'new', match: card.info
           //this is where we send the push notification
           // or do a cool modal or somethin
       })
-      myData.matches.thierId = { status: 'new', match: this.props.info }
+      myData.matches.thierId = { status: 'new', match: card.info }
 
       //add my info to their shit
-      firebaseApp.database().ref(`/users/${theirID}/matches`).push({
-          myID: {status: 'new', match: this.props.faceBookInfo }
+      firebaseApp.database().ref(`/users/${theirID}/matches/${myID}`).push({
+          status: 'new', match: this.props.faceBookInfo
       })
 
       //remove their id from my swipes
@@ -89,11 +90,14 @@ class Swipe extends Component {
   }
 
   handleYup (card) {
-    this.checkForMatch()
-    console.log("yup:", card)
+    this.checkForMatch(card)
+    console.log("yup:", this)
   }
 
   handleNope (card) {
+    
+    //check if my id is in their swipes
+    //if it is remove that shit
     console.log("nope:", card)
   }
 
@@ -114,6 +118,8 @@ class Swipe extends Component {
         </TouchableOpacity>
         {this.props.fetching ? <View style={styles.spinner}><Spinner isVisible={true} size={100} color={'#21CE99'} type={'ChasingDots'}/></View>
         : <SwipeCards
+          props={this.props}
+          checkForMatch={this.checkForMatch}
           cards={this.props.allUsers}
           loop={true}
           renderCard={(cardData) => <Card _handleNavigate={this.props._handleNavigate} route={route} {...cardData} />}
