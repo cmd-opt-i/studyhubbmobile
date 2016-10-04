@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+const _ = require('lodash')
 import * as actions from '../actions'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import SwipeCards from 'react-native-swipe-cards'
@@ -45,7 +46,50 @@ class Swipe extends Component {
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
+  checkForMatch() {
+    const myID = this.props.faceBookInfo.id
+    const theirID = this.props.info.faceBookInfo.id
+    const myData = this.props.faceBookLogin
+
+    if (this.props.info.swipes[myID]) {
+      //add their info to my shit
+      firebaseApp.database().ref(`/users/${myID}/matches`).push({
+          theirID: { status: 'new', match: this.props.info }
+          //this is where we send the push notification
+          // or do a cool modal or somethin
+      })
+      myData.matches.thierId = { status: 'new', match: this.props.info }
+
+      //add my info to their shit
+      firebaseApp.database().ref(`/users/${theirID}/matches`).push({
+          myID: {status: 'new', match: this.props.faceBookInfo }
+      })
+
+      //remove their id from my swipes
+      firebaseApp.database().ref(`/users/${myID}/swipes/${theirID}`).remove()
+        .then(() => console.log('successfully removed'))
+        .catch(err => console.log('err', err))
+        const newSwipes = {}
+        for(let key in myData.swipes) {
+          if (myData.swipes.thierId) {
+            //dont do nothing
+          } else {
+            newSwipes[key] = myData.swipes[key]
+          }
+        }
+
+        myData.swipes = newSwipes
+
+      //remove my id from their swipes
+      firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
+        .then(() => console.log('successfully removed'))
+        .catch(err => console.log('err', err))
+    }
+    this.props.storeUserFBData(myData)
+  }
+
   handleYup (card) {
+    this.checkForMatch()
     console.log("yup:", card)
   }
 

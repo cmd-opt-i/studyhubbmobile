@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -23,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1A85EBC8BDB04F6F855F9230 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5070FF8F00AA422288C96BE3 /* libRCTFBSDK.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		C24CB815DE7546EAACE36337 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */; };
 		F04E8E8C1D66C4AF00CEE05E /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8B1D66C4AF00CEE05E /* FBSDKShareKit.framework */; };
 		F04E8E8E1D66C4C200CEE05E /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8D1D66C4C200CEE05E /* FBSDKLoginKit.framework */; };
 		F04E8E901D66C4D700CEE05E /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F04E8E8F1D66C4D700CEE05E /* FBSDKCoreKit.framework */; };
@@ -31,7 +33,6 @@
 		F07B19741D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */; };
 		F07B19751D7119B200B04302 /* tabarra.narrowlight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */; };
 		F60C66AAFE5942DF97D8B04A /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04959624B2AD47918AA4C002 /* libBVLinearGradient.a */; };
-		C24CB815DE7546EAACE36337 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +127,13 @@
 			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
 			remoteInfo = RCTFBSDK;
 		};
+		F08A8E531DA350CE00448DD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3B6F4202F05E48E1ADC8493A /* RNSpinkit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D42CB3511B2538DE00FD0AE2;
+			remoteInfo = RNSpinkit;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -149,18 +157,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = studyhubbmobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = studyhubbmobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		3B6F4202F05E48E1ADC8493A /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSpinkit.xcodeproj; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; };
 		454A8E7CC32D4E8481A24B4D /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		5070FF8F00AA422288C96BE3 /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		6BD84BE7C5FB4EB6B5652C9B /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		F04E8E8B1D66C4AF00CEE05E /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKShareKit.framework"; sourceTree = "<group>"; };
 		F04E8E8D1D66C4C200CEE05E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		F04E8E8F1D66C4D700CEE05E /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../Documents/FacebookSDKs-iOS-4.14.0/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		F07B19641D7119A400B04302 /* tabarra.black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.black.ttf; path = ../../../Downloads/tabarra.black.ttf; sourceTree = "<group>"; };
 		F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.narrowlight.ttf; path = ../../../Downloads/tabarra.narrowlight.ttf; sourceTree = "<group>"; };
-		3B6F4202F05E48E1ADC8493A /* RNSpinkit.xcodeproj */ = {isa = PBXFileReference; name = "RNSpinkit.xcodeproj"; path = "../node_modules/react-native-spinkit/ios/RNSpinkit.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */ = {isa = PBXFileReference; name = "libRNSpinkit.a"; path = "libRNSpinkit.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +387,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F08A8E441DA350CD00448DD4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F08A8E541DA350CE00448DD4 /* libRNSpinkit.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -496,6 +512,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = F08A8E441DA350CD00448DD4 /* Products */;
+					ProjectRef = 3B6F4202F05E48E1ADC8493A /* RNSpinkit.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -588,6 +608,13 @@
 			fileType = archive.ar;
 			path = libRCTFBSDK.a;
 			remoteRef = F04E8E7F1D66C3EB00CEE05E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F08A8E541DA350CE00448DD4 /* libRNSpinkit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSpinkit.a;
+			remoteRef = F08A8E531DA350CE00448DD4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

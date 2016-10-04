@@ -51,9 +51,8 @@ export const getAllUsers = id => (
       .then(snapshot => {
         const allUsers = snapshot.val()
         const result = []
-
         for(let key in allUsers) {
-          if(JSON.parse(allUsers[key].id) !== JSON.parse(id)) {
+          if(JSON.parse(allUsers[key].faceBookInfo.id) !== JSON.parse(id)) {
             result.push({ image: allUsers[key].faceBookInfo.picture, info: allUsers[key] })
           }
         }
