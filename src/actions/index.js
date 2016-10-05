@@ -1,6 +1,6 @@
 'use strict'
 
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT } from '../constants'
 import { firebaseApp } from '../../index.ios'
 
 
@@ -39,7 +39,7 @@ export const storeUserFBData = (userData) => {
   }
 }
 
-const setAllUsers = users => ({
+export const setAllUsers = users => ({
   type: GET_ALL_USERS,
   allUsers: users
 })
@@ -63,3 +63,8 @@ export const getAllUsers = id => (
       .catch(err => console.log(err))
   )
 )
+
+export const checkForMatchesUnShift = () => ({
+  type: UNSHIFT,
+  unShift: false
+})

@@ -6,6 +6,7 @@
 /* --------- Facebook Data Reducer ----------- */
 export const USER_FB_DATA = 'USER_FB_DATA'
 export const SAVE_USER = 'SAVE_USER'
+export const UNSHIFT = 'UNSHIFT'
 
 /* --------- UI Reducer ----------- */
 export const IS_FETCHING = 'IS_FETCHING'

@@ -1,11 +1,18 @@
 'use strict'
 
-import { USER_FB_DATA } from '../constants'
+import { USER_FB_DATA, UNSHIFT } from '../constants'
 
-const FacebookDataReducer = (state = {}, action) => {
+const initialState = {
+  unShift: true
+}
+
+const FacebookDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_FB_DATA:
       return { ...state, faceBookInfo: action.userData }
+    case UNSHIFT:
+      console.log('hit UNSHIFT');
+      return { ...state, unShift: action.unShift }
   }
   return state
 }

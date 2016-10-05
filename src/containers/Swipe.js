@@ -46,6 +46,43 @@ class Swipe extends Component {
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
+  componentWillReceiveProps(nextProps) {
+    nextProps.allUsers ? this.unshiftMatches(this.props.faceBookInfo.matches) : null
+  }
+
+  unshiftMatches(matches) {
+    console.log('matches at the begining', matches);
+    const { allUsers, setAllUsers, checkForMatchesUnShift } = this.props
+    const matchesToBeUnShifted = []
+    const myID = this.props.faceBookInfo.id
+
+    if (this.props.unShift) {
+      // set unShift to false
+      checkForMatchesUnShift()
+      // loop over all users
+      const result = _.map(allUsers, user => {
+        let ID = user.info.faceBookInfo.id
+        if (matches[ID]) {
+          matchesToBeUnShifted.push(user)
+        } else {
+          return user
+        }
+      })
+
+      matchesToBeUnShifted.forEach(match => {
+        if (match === 'test') {
+          console.log('do nothing');
+        } else {
+        }
+        result.unshift(match)
+      })
+
+      setAllUsers(result)
+    } else {
+      console.log('eat ass');
+    }
+  }
+
   checkForMatch(card) {
     const myID = this.props.faceBookInfo.id
     const theirID = card.info.faceBookInfo.id
@@ -80,7 +117,7 @@ class Swipe extends Component {
       firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
         .then(() => console.log('successfully removed'))
         .catch(err => console.log('err', err))
-        
+
         firebaseApp.database().ref(`/users/${myID}`)
           .ref.once('value')
           .then(snapshot => {
@@ -96,7 +133,6 @@ class Swipe extends Component {
 
   handleYup (card) {
     this.checkForMatch(card)
-    console.log("yup:", card)
   }
 
   handleNope (card) {
@@ -106,7 +142,6 @@ class Swipe extends Component {
     firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
     //check if my id is in their swipes
     //if it is remove that shit
-    console.log("nope:", card)
   }
 
   render() {
@@ -216,7 +251,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   faceBookInfo: state.FacebookDataReducer.faceBookInfo,
   allUsers: state.FirebaseReducer.allUsers,
-  fetching: state.UIReducer.fetching
+  fetching: state.UIReducer.fetching,
+  unShift: state.FacebookDataReducer.unShift
 })
 
 export default connect(mapStateToProps, actions)(Swipe)
