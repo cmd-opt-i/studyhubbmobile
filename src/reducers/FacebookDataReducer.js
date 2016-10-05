@@ -11,7 +11,6 @@ const FacebookDataReducer = (state = initialState, action) => {
     case USER_FB_DATA:
       return { ...state, faceBookInfo: action.userData }
     case UNSHIFT:
-      console.log('hit UNSHIFT');
       return { ...state, unShift: action.unShift }
   }
   return state

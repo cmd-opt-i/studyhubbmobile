@@ -47,41 +47,39 @@ class Swipe extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.allUsers ? this.unshiftMatches(this.props.faceBookInfo.matches) : null
+    console.log('nextProps', nextProps);
+    nextProps.allUsers ? this.unshiftSwipes(nextProps.faceBookInfo.newSwipes, nextProps.allUsers) : null
   }
+    unshiftSwipes(swipes, allUsers) {
+      const { setAllUsers, unShift, faceBookInfo } = this.props
+      const myID = faceBookInfo.faceBookInfo.id
+      const swipesToBeUnShifted = []
+      const result = []
 
-  unshiftMatches(matches) {
-    console.log('matches at the begining', matches);
-    const { allUsers, setAllUsers, checkForMatchesUnShift } = this.props
-    const matchesToBeUnShifted = []
-    const myID = this.props.faceBookInfo.id
+      if (unShift) {
+        allUsers.forEach(user => {
+          let ID = user.info.faceBookInfo.id
+          if (swipes[ID]) {
+            swipesToBeUnShifted.push(user)
+          } else {
+            result.push(user)
+          }
+        })
 
-    if (this.props.unShift) {
-      // set unShift to false
-      checkForMatchesUnShift()
-      // loop over all users
-      const result = _.map(allUsers, user => {
-        let ID = user.info.faceBookInfo.id
-        if (matches[ID]) {
-          matchesToBeUnShifted.push(user)
-        } else {
-          return user
-        }
-      })
+        swipesToBeUnShifted.forEach(user => {
+          const theirID = user.info.faceBookInfo.id
+          firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
+            .then(() => console.log('successfully removed'))
+            .catch(err => console.log('err', err))
+          result.unshift(user)
+        })
+        setAllUsers(result, true)
+      } else {
+        console.log('eat ass');
+      }
 
-      matchesToBeUnShifted.forEach(match => {
-        if (match === 'test') {
-          console.log('do nothing');
-        } else {
-        }
-        result.unshift(match)
-      })
-
-      setAllUsers(result)
-    } else {
-      console.log('eat ass');
     }
-  }
+
 
   checkForMatch(card) {
     const myID = this.props.faceBookInfo.id
@@ -124,10 +122,18 @@ class Swipe extends Component {
             this.props.storeUserFBData(snapshot.val())
           })
     } else {
-      //stre their id in myswipes
-      firebaseApp.database().ref(`/users/${myID}/swipes`).update({
-        [theirID]: theirID
-      })
+      firebaseApp.database().ref(`/users/matches/${theirID}`)
+        .ref.once('value')
+        .then(snapshot => {
+          if(snapshot.val()) {
+            console.log('already matched');
+          } else {
+            //stre their id in myswipes
+            firebaseApp.database().ref(`/users/${myID}/swipes`).update({
+              [theirID]: theirID
+            })            
+          }
+        })
     }
   }
 

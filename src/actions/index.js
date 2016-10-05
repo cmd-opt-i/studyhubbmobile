@@ -39,10 +39,22 @@ export const storeUserFBData = (userData) => {
   }
 }
 
-export const setAllUsers = users => ({
-  type: GET_ALL_USERS,
-  allUsers: users
-})
+export const setAllUsers = (users, callUnshift) => {
+
+  if (callUnshift) {
+    console.log('second');
+    return function (dispatch) {
+      dispatch({ type: GET_ALL_USERS, allUsers: users})
+      dispatch({ type: UNSHIFT, unShift: false })
+    }
+  } else {
+    console.log('first');
+    return {
+      type: GET_ALL_USERS,
+      allUsers: users
+    }
+  }
+}
 
 export const getAllUsers = id => (
   dispatch => (
@@ -58,13 +70,13 @@ export const getAllUsers = id => (
         }
 
         dispatch(isFetching(false))
-        dispatch(setAllUsers(result))
+        dispatch(setAllUsers(result, false))
       })
       .catch(err => console.log(err))
   )
 )
 
-export const checkForMatchesUnShift = () => ({
+export const checkForMatchesUnShift = unShift => ({
   type: UNSHIFT,
-  unShift: false
+  unShift
 })
