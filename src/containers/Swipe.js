@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 const _ = require('lodash')
 import * as actions from '../actions'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import SwipeCards from 'react-native-swipe-cards'
+import SwipeCards from '../components/SwipeCards'
 import LinearGradient from 'react-native-linear-gradient'
 import Spinner from 'react-native-spinkit'
 import Card from '../components/Card'
@@ -131,7 +131,7 @@ class Swipe extends Component {
             //stre their id in myswipes
             firebaseApp.database().ref(`/users/${myID}/swipes`).update({
               [theirID]: theirID
-            })            
+            })
           }
         })
     }
