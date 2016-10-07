@@ -9,7 +9,6 @@ class Messages extends Component {
 
   constructor (props) {
     super(props)
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this._messages = []
 
     this.state = {
@@ -17,9 +16,7 @@ class Messages extends Component {
       messages: this._messages,
       message: '',
       messageID: '',
-      dataSource: ds.cloneWithRows([1,2,3,4,5,6,7,8,9,10,11,1,1,1,1,1,1,1,1,2,3,4,5,6,7,8,9,10,11,1,1,1,1,1,1,1,1,2,3,4,5,6,7,8,9,1])
     }
-
   }
 
   keyboardWillShow(e) {
@@ -45,7 +42,10 @@ class Messages extends Component {
   }
 
   componentDidMount () {
-    console.log('props from messages', this.props);
+    this.getMessages()
+  }
+
+  getMessages () {
     const { faceBookInfo, currentStudyBuddy } = this.props
     const messages = faceBookInfo.messages
     const theirID = currentStudyBuddy.id
@@ -60,6 +60,7 @@ class Messages extends Component {
     //get all messages
     firebaseApp.database().ref(`/conversations/${messageID}`)
       .ref.on('child_added', child => {
+        console.log('new child', child.val());
         this.handleReceive({
           sender: child.val().sender,
           date: new Date(child.val().date),
@@ -88,111 +89,61 @@ class Messages extends Component {
       this.setMessages(this._messages.concat(message));
   }
 
-  handleSend() {
+  handleSend(message = {}) {
     const index = this.state.messages.length - 1
-    firebaseApp.database().ref(`/conversations/${this.state.messageID}/${index}`).set({
-      sender: this.props.faceBookInfo.id,
-      text: this.state.message,
-      date: new Date().getTime()
-    })
-    this.setState({ message: ''})
+    if (this.state.message === '') {
+      console.log('do nothing');
+    } else {
+      firebaseApp.database().ref(`/conversations/${this.state.messageID}`).update({
+        [index]: {
+          sender: this.props.faceBookInfo.id,
+          text: this.state.message,
+          date: new Date().getTime()
+        }
+      })
+      this.setState({ message: ''})
+    }
   }
 
-  // messageBox (message) {
-  //
-  //   <View style={styles.receivedMessageBox}>
-  //     <Text style={styles.recivedText}>I am doing great, thanks for asking. We can go to Starbucks?</Text>
-  //   </View>
-  //   <View style={styles.sentMessageBox}>
-  //     <Text style={styles.sentText}>Cool, I will see you there.</Text>
-  //   </View>
-  //
-  //   if (message.sender === 'sender') {
-  //     return (
-  //       <View style={styles.sentMessageBox}>
-  //         <Text style={styles.entText}>{message.text}</Text>
-  //       </View>
-  //     )
-  //   }
-  //
-  //   return (
-  //       <View style={styles.receivedMessageBox}>
-  //         <Text style={styles.recivedText}>{message.text}</Text>
-  //       </View>
-  //   )
-  //
-  // }
+  messageBox (message, index) {
+    if (message.sender === this.props.faceBookInfo.id) {
+      return (
+        <View key={index} style={styles.sentMessageBox}>
+          <Text style={styles.sentText}>{message.text}</Text>
+        </View>
+      )
+    }
+
+    return (
+        <View key={index} style={styles.receivedMessageBox}>
+          <Text style={styles.recivedText}>{message.text}</Text>
+        </View>
+    )
+
+  }
 
   render () {
     const { currentStudyBuddy } = this.props
+    const { messages } = this.state
+
     console.log('state', this.state);
     return (
       <View style={styles.container}>
-        <View style={styles.navIcons}>
-          <TouchableOpacity style={styles.backArrowContainer} onPress={this.props._goBack}>
-            <Image source={require('../../assets/back.png')} style={styles.backArrow} />
-          </TouchableOpacity>
-          <Image source={require('../../assets/online-circle.png')} style={styles.onlineCircle} />
-          <Text style={styles.nameText}>{currentStudyBuddy.name}</Text>
-          <Image style={styles.profilePic} source={{uri: currentStudyBuddy.picture}}/>
-        </View>
-
-        {/*<ListView
-          style={{marginBottom: 40}}
-          dataSource={this.state.dataSource}
-          renderRow={message => (
-            <Text>hello</Text>
-          )}
-        />*/}
-        <ScrollView>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-          <Text>Hello</Text>
-        </ScrollView>
+        <Animated.View style={{ flex: 1, bottom: this.state.keyboardOffset }}>
+          <View style={styles.navIcons}>
+            <TouchableOpacity style={styles.backArrowContainer} onPress={this.props._goBack}>
+              <Image source={require('../../assets/back.png')} style={styles.backArrow} />
+            </TouchableOpacity>
+            <Image source={require('../../assets/online-circle.png')} style={styles.onlineCircle} />
+            <Text style={styles.nameText}>{currentStudyBuddy.name}</Text>
+            <Image style={styles.profilePic} source={{uri: currentStudyBuddy.picture}}/>
+          </View>
+          <ScrollView style={{marginBottom: 55}}>
+            { messages.map((message, index) => {
+              return this.messageBox(message, index)
+            })}
+          </ScrollView>
+        </Animated.View>
         <Animated.View style={[styles.chatInputContainer, { bottom: this.state.keyboardOffset, flexDirection: 'row' }]}>
             <TextInput
             onChangeText={text => this.setState({ message: text})}
