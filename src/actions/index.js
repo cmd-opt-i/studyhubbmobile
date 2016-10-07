@@ -1,14 +1,8 @@
 'use strict'
 
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT, GET_CURRENT_CARD } from '../constants'
 import { firebaseApp } from '../../index.ios'
 
-
-export const fetchData = (url, type) => (
-   (dispatch) => {
-    dispatch(dispatch, url, type)
-  }
-)
 
 /* ---------- Navigation Start ---------- */
 export const push = (route) => {
@@ -79,4 +73,11 @@ export const getAllUsers = id => (
 export const checkForMatchesUnShift = unShift => ({
   type: UNSHIFT,
   unShift
+})
+
+//---------------
+
+export const getCurrentCard = card => ({
+  type: GET_CURRENT_CARD,
+  currentCard: card
 })

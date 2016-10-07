@@ -13,92 +13,10 @@ import {
 } from 'react-native'
 
 import clamp from 'clamp'
-
 import Defaults from './Defaults.js'
 
 var SWIPE_THRESHOLD = 120
 
-// Base Styles. Use props to override these values
-var styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-    yup: {
-      borderColor: '#28CF9B',
-      borderWidth: 2,
-      position: 'absolute',
-      padding: 20,
-      top: 150,
-      borderRadius: 5,
-      left: 20,
-      backgroundColor: 'transparent'
-    },
-    yupText: {
-      fontSize: 16,
-      color: '#28CF9B',
-    },
-    nope: {
-      borderColor: '#E92E49',
-      borderWidth: 2,
-      position: 'absolute',
-      top: 150,
-      padding: 20,
-      borderRadius: 5,
-      right: 20,
-      backgroundColor: 'transparent'
-    },
-    nopeText: {
-      fontSize: 16,
-      color: '#E92E49',
-    },
-    nopeButton: {
-      height: 70,
-      width: 70,
-      borderWidth: 1,
-      borderColor: '#E92E49',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'relative',
-      top: 40,
-      borderRadius: 100,
-      margin: 10,
-      marginRight: 30,
-      backgroundColor: '#E92E49',
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
-      shadowOffset: {
-        height: 2,
-        width: 1,
-      }
-    },
-    buttonText: {
-      color: '#2D69A9'
-    },
-    yupButton: {
-      height: 70,
-      width: 70,
-      borderWidth: 1,
-      borderColor: '#28CF9B',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'relative',
-      top: 40,
-      borderRadius: 100,
-      margin: 10,
-      marginLeft: 30,
-      backgroundColor: '#28CF9B',
-      shadowColor: 'rgba(0, 0, 0, 0.12)',
-      shadowOpacity: 0.8,
-      shadowRadius: 2,
-      shadowOffset: {
-        height: 2,
-        width: 1,
-      }
-    }
-})
 class SwipeCards extends Component {
   constructor(props) {
     super(props)
@@ -280,7 +198,7 @@ class SwipeCards extends Component {
                     <TouchableOpacity style={styles.nopeButton}>
                       <Image style={{height: 20, width: 20}} source={require('../../assets/cancel.png')} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.yupButton}>
+                    <TouchableOpacity style={styles.yupButton} onPress={this.props.renderNope}>
                       <Image style={{height: 23, width: 23}} source={require('../../assets/book.png')} />
                     </TouchableOpacity>
                   </View>
@@ -289,6 +207,87 @@ class SwipeCards extends Component {
     )
   }
 }
+
+var styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    yup: {
+      borderColor: '#28CF9B',
+      borderWidth: 2,
+      position: 'absolute',
+      padding: 20,
+      top: 150,
+      borderRadius: 5,
+      left: 20,
+      backgroundColor: 'transparent'
+    },
+    yupText: {
+      fontSize: 16,
+      color: '#28CF9B',
+    },
+    nope: {
+      borderColor: '#E92E49',
+      borderWidth: 2,
+      position: 'absolute',
+      top: 150,
+      padding: 20,
+      borderRadius: 5,
+      right: 20,
+      backgroundColor: 'transparent'
+    },
+    nopeText: {
+      fontSize: 16,
+      color: '#E92E49',
+    },
+    nopeButton: {
+      height: 70,
+      width: 70,
+      borderWidth: 1,
+      borderColor: '#E92E49',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      top: 40,
+      borderRadius: 100,
+      margin: 10,
+      marginRight: 30,
+      backgroundColor: '#E92E49',
+      shadowColor: 'rgba(0, 0, 0, 0.12)',
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 1,
+      }
+    },
+    buttonText: {
+      color: '#2D69A9'
+    },
+    yupButton: {
+      height: 70,
+      width: 70,
+      borderWidth: 1,
+      borderColor: '#28CF9B',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      top: 40,
+      borderRadius: 100,
+      margin: 10,
+      marginLeft: 30,
+      backgroundColor: '#28CF9B',
+      shadowColor: 'rgba(0, 0, 0, 0.12)',
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      shadowOffset: {
+        height: 2,
+        width: 1,
+      }
+    }
+})
 
 SwipeCards.propTypes = {
     cards: React.PropTypes.array,

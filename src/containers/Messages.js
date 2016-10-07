@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView } from 'react-native'
+import firebaseApp from '../../index.ios'
 import * as actions from "../actions/index"
 
 const messages = [

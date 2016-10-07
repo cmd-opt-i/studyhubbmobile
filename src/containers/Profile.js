@@ -2,9 +2,12 @@
 
 import React, { Component } from 'react'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 
 class Profile extends Component {
   render() {
+    console.log('props from profile', this.props);
+    const { currentCard } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
@@ -13,10 +16,10 @@ class Profile extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.profilePicContainer}>
-          <Image style={styles.profilePic} source={require('../../assets/girl2.jpg')} />
+          <Image style={styles.profilePic} source={{uri: currentCard.faceBookInfo.picture}} />
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Marila </Text>
-            <Text style={styles.age}>| 23</Text>
+            <Text style={styles.name}>{currentCard.faceBookInfo.name} </Text>
+            <Text style={styles.age}>| {currentCard.age}</Text>
           </View>
         </View>
         <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginTop: -10, position: 'absolute', left: 38}}>Info</Text>
@@ -31,13 +34,11 @@ class Profile extends Component {
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/diploma.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>Business Management</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{currentCard.major}</Text>
           </View>
           <Text style={{fontSize: 13, backgroundColor: 'transparent', color: '#344145', marginBottom: -7}}>About</Text>
           <View style={styles.aboutContainer}>
-            <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>
-              Looking to meet some cool people to study with! Tri Delta.
-            </Text>
+            <Text style={{ fontSize: 10, color: '#344145', fontWeight: '300' }}>{currentCard.bio}</Text>
           </View>
         </View>
       </View>
@@ -121,4 +122,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Profile
+const mapStateToProps = state => ({
+  currentCard: state.CardReducer.currentCard
+})
+
+export default connect(mapStateToProps, null)(Profile)

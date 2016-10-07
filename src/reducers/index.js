@@ -5,13 +5,15 @@ import UIReducer from './UIReducer'
 import NavReducer from './NavReducer'
 import FirebaseReducer from './FirebaseReducer'
 import FacebookDataReducer from './FacebookDataReducer'
+import CardReducer from './CardReducer'
 
 
 const reducers = combineReducers({
   UIReducer,
   NavReducer,
   FirebaseReducer,
-  FacebookDataReducer
+  FacebookDataReducer,
+  CardReducer
 })
 
 export default reducers
