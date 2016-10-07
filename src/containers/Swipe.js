@@ -116,11 +116,27 @@ class Swipe extends Component {
         .then(() => console.log('successfully removed'))
         .catch(err => console.log('err', err))
 
-        firebaseApp.database().ref(`/users/${myID}`)
-          .ref.once('value')
-          .then(snapshot => {
-            this.props.storeUserFBData(snapshot.val())
-          })
+      //create message id/object
+      const messageID = `${theirID}_${myID}`
+      firebaseApp.database().ref(`/messages/${messageID}`).update({
+        test: 'test'
+      })
+
+      //store message id in my object
+      firebaseApp.database().ref(`/users/${myID}/messages`).update({
+        [messageID]: messageID
+      })
+
+      //store message id in their object
+      firebaseApp.database().ref(`/users/${theirID}/messages`).update({
+        [messageID]: messageID
+      })
+
+      firebaseApp.database().ref(`/users/${myID}`)
+        .ref.once('value')
+        .then(snapshot => {
+          this.props.storeUserFBData(snapshot.val())
+        })
     } else {
       firebaseApp.database().ref(`/users/matches/${theirID}`)
         .ref.once('value')
