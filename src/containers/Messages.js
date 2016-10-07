@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView } from 'react-native'
+import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView, ScrollView } from 'react-native'
 const _ = require('lodash');
 import { firebaseApp } from '../../index.ios'
 import { connect } from 'react-redux'
@@ -16,7 +16,8 @@ class Messages extends Component {
       keyboardOffset: new Animated.Value(0),
       messages: this._messages,
       message: '',
-      messageID: ''
+      messageID: '',
+      dataSource: ds.cloneWithRows([1,2,3,4,5,6,7,8,9,10,11,1,1,1,1,1,1,1,1,2,3,4,5,6,7,8,9,10,11,1,1,1,1,1,1,1,1,2,3,4,5,6,7,8,9,1])
     }
 
   }
@@ -71,6 +72,8 @@ class Messages extends Component {
   componentWillUnmount() {
     keyboardWillShowSubscription.remove();
     keyboardWillHideSubscription.remove();
+    firebaseApp.database().ref(`/conversations/${this.state.messageID}`)
+    .ref.off('child_added')
   }
 
   setMessages(messages) {
@@ -95,30 +98,30 @@ class Messages extends Component {
     this.setState({ message: ''})
   }
 
-  messageBox (message) {
-
-    <View style={styles.receivedMessageBox}>
-      <Text style={styles.recivedText}>I am doing great, thanks for asking. We can go to Starbucks?</Text>
-    </View>
-    <View style={styles.sentMessageBox}>
-      <Text style={styles.sentText}>Cool, I will see you there.</Text>
-    </View>
-
-    if (message.sender === 'sender') {
-      return (
-        <View style={styles.sentMessageBox}>
-          <Text style={styles.entText}>{message.text}</Text>
-        </View>
-      )
-    }
-
-    return (
-        <View style={styles.receivedMessageBox}>
-          <Text style={styles.recivedText}>{message.text}</Text>
-        </View>
-    )
-
-  }
+  // messageBox (message) {
+  //
+  //   <View style={styles.receivedMessageBox}>
+  //     <Text style={styles.recivedText}>I am doing great, thanks for asking. We can go to Starbucks?</Text>
+  //   </View>
+  //   <View style={styles.sentMessageBox}>
+  //     <Text style={styles.sentText}>Cool, I will see you there.</Text>
+  //   </View>
+  //
+  //   if (message.sender === 'sender') {
+  //     return (
+  //       <View style={styles.sentMessageBox}>
+  //         <Text style={styles.entText}>{message.text}</Text>
+  //       </View>
+  //     )
+  //   }
+  //
+  //   return (
+  //       <View style={styles.receivedMessageBox}>
+  //         <Text style={styles.recivedText}>{message.text}</Text>
+  //       </View>
+  //   )
+  //
+  // }
 
   render () {
     const { currentStudyBuddy } = this.props
@@ -133,20 +136,73 @@ class Messages extends Component {
           <Text style={styles.nameText}>{currentStudyBuddy.name}</Text>
           <Image style={styles.profilePic} source={{uri: currentStudyBuddy.picture}}/>
         </View>
-        <View style={styles.sentMessageBox}>
-          <Text style={styles.sentText}>Hey how are you doing? Where would you like to study?</Text>
-        </View>
 
-        <Animated.View style={[styles.chatInputContainer, { bottom: this.state.keyboardOffset }]}>
-          <TextInput
+        {/*<ListView
+          style={{marginBottom: 40}}
+          dataSource={this.state.dataSource}
+          renderRow={message => (
+            <Text>hello</Text>
+          )}
+        />*/}
+        <ScrollView>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+          <Text>Hello</Text>
+        </ScrollView>
+        <Animated.View style={[styles.chatInputContainer, { bottom: this.state.keyboardOffset, flexDirection: 'row' }]}>
+            <TextInput
             onChangeText={text => this.setState({ message: text})}
             value={this.state.message}
             style={styles.chatInput}
             placeholder={'Your Message'}
-          />
-          <TouchableOpacity style={{backgroundColor: 'red', height: 20, width: 40}} onPress={this.handleSend.bind(this)}>
-            <Text>Send</Text>
-          </TouchableOpacity>
+            />
+            <TouchableOpacity style={styles.sendBtn} onPress={this.handleSend.bind(this)}>
+              <Text>Send</Text>
+            </TouchableOpacity>
         </Animated.View>
       </View>
     )
@@ -237,8 +293,16 @@ const styles = StyleSheet.create({
   },
   chatInput: {
     height: 55,
+    width: 300,
     backgroundColor: '#F3F3F3',
     padding: 10
+  },
+  sendBtn: {
+    height: 55,
+    width: 75,
+    backgroundColor: '#21CE99',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
