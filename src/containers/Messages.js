@@ -1,35 +1,22 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView } from 'react-native'
-import firebaseApp from '../../index.ios'
+const _ = require('lodash');
+import { firebaseApp } from '../../index.ios'
+import { connect } from 'react-redux'
 import * as actions from "../actions/index"
-
-const messages = [
-  {
-    sender: 'me',
-    message: 'Hey how are you doing? Where would you like to study?'
-  },
-  {
-    sender: 'them',
-    message: 'I am doing great, thanks for asking. We can go to Starbucks?'
-  },
-  {
-    sender: 'me',
-    message: 'Cool, I will see you there.'
-  },
-  {
-    sender: 'them',
-    message: 'Can\'t wait!'
-  },
-]
 
 class Messages extends Component {
 
   constructor (props) {
     super(props)
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this._messages = []
 
     this.state = {
       keyboardOffset: new Animated.Value(0),
+      messages: this._messages,
+      message: '',
+      messageID: ''
     }
 
   }
@@ -56,12 +43,67 @@ class Messages extends Component {
       .addListener('keyboardWillHide', (e) => this.keyboardWillHide(e));
   }
 
+  componentDidMount () {
+    console.log('props from messages', this.props);
+    const { faceBookInfo, currentStudyBuddy } = this.props
+    const messages = faceBookInfo.messages
+    const theirID = currentStudyBuddy.id
+    const myID = faceBookInfo.id
+
+    //loop throught messages and return the ones === to myID and their id
+    const messageID = _.filter(messages, id => id === `${myID}_${theirID}` || `${theirID}_${myID}`)
+    this.setState({
+      messageID
+    })
+
+    //get all messages
+    firebaseApp.database().ref(`/conversations/${messageID}`)
+      .ref.on('child_added', child => {
+        this.handleReceive({
+          sender: child.val().sender,
+          date: new Date(child.val().date),
+          text: child.val().text
+        })
+      })
+
+  }
+
   componentWillUnmount() {
     keyboardWillShowSubscription.remove();
     keyboardWillHideSubscription.remove();
   }
 
+  setMessages(messages) {
+    this._messages = messages;
+
+    this.setState({
+      messages: messages,
+    });
+  }
+
+  handleReceive(message = {}) {
+      this.setMessages(this._messages.concat(message));
+  }
+
+  handleSend() {
+    const index = this.state.messages.length - 1
+    firebaseApp.database().ref(`/conversations/${this.state.messageID}/${index}`).set({
+      sender: this.props.faceBookInfo.id,
+      text: this.state.message,
+      date: new Date().getTime()
+    })
+    this.setState({ message: ''})
+  }
+
   messageBox (message) {
+
+    <View style={styles.receivedMessageBox}>
+      <Text style={styles.recivedText}>I am doing great, thanks for asking. We can go to Starbucks?</Text>
+    </View>
+    <View style={styles.sentMessageBox}>
+      <Text style={styles.sentText}>Cool, I will see you there.</Text>
+    </View>
+
     if (message.sender === 'sender') {
       return (
         <View style={styles.sentMessageBox}>
@@ -79,6 +121,8 @@ class Messages extends Component {
   }
 
   render () {
+    const { currentStudyBuddy } = this.props
+    console.log('state', this.state);
     return (
       <View style={styles.container}>
         <View style={styles.navIcons}>
@@ -86,23 +130,23 @@ class Messages extends Component {
             <Image source={require('../../assets/back.png')} style={styles.backArrow} />
           </TouchableOpacity>
           <Image source={require('../../assets/online-circle.png')} style={styles.onlineCircle} />
-          <Text style={styles.nameText}>Michelle</Text>
-          <Image style={styles.profilePic} source={require('../../assets/girl5.jpg')}/>
+          <Text style={styles.nameText}>{currentStudyBuddy.name}</Text>
+          <Image style={styles.profilePic} source={{uri: currentStudyBuddy.picture}}/>
         </View>
         <View style={styles.sentMessageBox}>
           <Text style={styles.sentText}>Hey how are you doing? Where would you like to study?</Text>
         </View>
-        <View style={styles.receivedMessageBox}>
-          <Text style={styles.recivedText}>I am doing great, thanks for asking. We can go to Starbucks?</Text>
-        </View>
-        <View style={styles.sentMessageBox}>
-          <Text style={styles.sentText}>Cool, I will see you there.</Text>
-        </View>
+
         <Animated.View style={[styles.chatInputContainer, { bottom: this.state.keyboardOffset }]}>
           <TextInput
+            onChangeText={text => this.setState({ message: text})}
+            value={this.state.message}
             style={styles.chatInput}
             placeholder={'Your Message'}
           />
+          <TouchableOpacity style={{backgroundColor: 'red', height: 20, width: 40}} onPress={this.handleSend.bind(this)}>
+            <Text>Send</Text>
+          </TouchableOpacity>
         </Animated.View>
       </View>
     )
@@ -198,4 +242,9 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Messages
+const mapStateToProps = state => ({
+  currentStudyBuddy: state.CardReducer.currentStudyBuddy,
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo
+})
+
+export default connect(mapStateToProps, null)(Messages)

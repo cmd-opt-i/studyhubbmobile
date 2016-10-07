@@ -20,5 +20,6 @@ export const RESET_ROUTE_STATE = 'RESET_ROUTE_STATE'
 export const SEARCH = 'SEARCH'
 export const GET_ALL_USERS = 'GET_ALL_USERS'
 
-/* --------- Firebase Reducer ----------- */
+/* --------- Card Reducer ----------- */
 export const GET_CURRENT_CARD = 'GET_CURRENT_CARD'
+export const CURRENT_STUDY_BUDDY = 'CURRENT_STUDY_BUDDY'

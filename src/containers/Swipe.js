@@ -91,7 +91,8 @@ class Swipe extends Component {
       firebaseApp.database().ref(`/users/${myID}/matches/${theirID}`).update({
           status: 'new',
           picture: card.image,
-          name: card.info.faceBookInfo.name
+          name: card.info.faceBookInfo.name,
+          id: theirID
           //this is where we send the push notification
           // or do a cool modal or somethin
       })
@@ -118,7 +119,7 @@ class Swipe extends Component {
 
       //create message id/object
       const messageID = `${theirID}_${myID}`
-      firebaseApp.database().ref(`/messages/${messageID}`).update({
+      firebaseApp.database().ref(`/conversations/${messageID}`).update({
         test: 'test'
       })
 
