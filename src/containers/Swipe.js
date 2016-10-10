@@ -155,7 +155,7 @@ class Swipe extends Component {
             firebaseApp.database().ref(`/users/${myID}/swipes`).update({
               [theirID]: theirID
             })
-
+            // add new swipes
             firebaseApp.database().ref(`/users/${theirID}/newSwipes`).update({
               [myID]: myID
             })
