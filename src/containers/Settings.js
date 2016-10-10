@@ -57,7 +57,7 @@ class Settings extends Component {
           <TouchableOpacity onPress={this.props._goback} style={styles.doneTextContainer}>
             <Text style={styles.doneText}>Done</Text>
           </TouchableOpacity>
-          <ScrollView>
+          {/*<ScrollView>
             <Text style={styles.notifications}>Notifications</Text>
             <View style={styles.notificationOptions}>
               <Text style={styles.notificationText}>Messages</Text>
@@ -80,7 +80,7 @@ class Settings extends Component {
                 value={this.state.trueSwitchIsOn}
               />
             </View>
-          </ScrollView>
+          </ScrollView>*/}
           <View style={styles.btnContianer}>
             <TouchableOpacity onPress={this.signOut.bind(this)} style={styles.btn}>
               <Text style={styles.btnText}>Logout</Text>
@@ -142,6 +142,7 @@ const styles = StyleSheet.create({
     bottom: 13
   },
   btnContianer: {
+    marginTop: 90,
     marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center'
