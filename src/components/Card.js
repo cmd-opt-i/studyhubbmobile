@@ -30,12 +30,12 @@ class Card extends Component {
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-          <Text style={{color: '#344145'}}>Los Angeles, CA</Text>
+          <Text style={{color: '#344145'}}>{this.props.info.faceBookInfo.location.name}</Text>
         </View>
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-          <Text style={{color: '#344145'}}>Loyola Marymount University</Text>
+          <Text style={{color: '#344145'}}>{this.props.info.school[0].school.name}</Text>
         </View>
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>

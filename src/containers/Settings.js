@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch, AsyncStorage, Alert } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch, AsyncStorage, Alert, Linking } from 'react-native'
 import * as actions from '../actions'
 import { firebaseApp } from '../../index.ios'
 
@@ -89,6 +89,10 @@ class Settings extends Component {
               <Text style={styles.btnText}>Delete Account</Text>
             </TouchableOpacity>
           </View>
+          <Text style={{color: 'blue', marginLeft: 40}}
+                onPress={() => Linking.openURL('http://www.studyhubb.com/privacy-policy/')}>
+            Privacy Policy
+          </Text>
         </View>
     )
   }
