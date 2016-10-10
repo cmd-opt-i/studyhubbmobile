@@ -1,7 +1,10 @@
+'use strict'
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch, AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch, AsyncStorage, Alert } from 'react-native'
 import * as actions from '../actions'
+import { firebaseApp } from '../../index.ios'
 
 const someData = [1,2,3,4,5,6,7,7,8,8,9,9]
 
@@ -28,6 +31,20 @@ class Settings extends Component {
     AsyncStorage.removeItem('loggedIn')
     .catch(err => console.log('login', err))
     this.props.popLogin()
+  }
+
+  deleteProfile() {
+    const { allUsers, faceBookInfo } = this.props
+    const ID = faceBookInfo.id
+    firebaseApp.database().ref(`/users/${ID}`).remove()
+  }
+
+  askAreTheySureDel() {
+    const alertMessage = 'Are you sure you want to delete your profile? All of your data will be deleted.'
+    Alert.alert('Delete?', alertMessage, [
+              { text: 'Cancel', onPress: () => console.log('Canceled!') },
+              { text: 'Delete', onPress: () => this.deleteProfile() },
+            ])
   }
 
   render () {
@@ -68,7 +85,7 @@ class Settings extends Component {
             <TouchableOpacity onPress={this.signOut.bind(this)} style={styles.btn}>
               <Text style={styles.btnText}>Logout</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.btn, { backgroundColor: '#E92E49', borderColor:'red' }]}>
+            <TouchableOpacity onPress={this.askAreTheySureDel.bind(this)} style={[styles.btn, { backgroundColor: '#E92E49', borderColor:'red' }]}>
               <Text style={styles.btnText}>Delete Account</Text>
             </TouchableOpacity>
           </View>
@@ -153,7 +170,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => ({
-  navigation: state.NavReducer
+  navigation: state.NavReducer,
+  allUsers: state.FirebaseReducer.allUsers,
+  faceBookInfo: state.FacebookDataReducer.faceBookInfo
 })
 
 export default connect(mapStateToProps, actions)(Settings)
