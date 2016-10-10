@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import * as actions from '../actions'
 
 const route = {
   type: 'push',
@@ -20,15 +21,32 @@ const editProfileRoute = {
   }
 }
 
+
 class MyProfile extends Component {
+
+  goToSwipe() {
+    const swipeRoute = {
+      type: 'push',
+      route: {
+        key: 'swipe',
+        title: 'Swipe'
+      }
+    }
+
+    this.props.pop()
+    this.props._handleNavigate(swipeRoute)
+  }
+
   render() {
     const { faceBookInfo } = this.props
+    const faceBookObj = this.props.faceBookInfo.faceBookInfo
     const profilePic = faceBookInfo.faceBookInfo.picture.data.url
+    console.log('faceBookInfo', faceBookObj);
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
           <Image style={styles.userIcon} source={require('../../assets/green-user.png')} />
-          <TouchableOpacity onPress={this.props._goBack} style={{position: 'absolute', right: -160}}>
+          <TouchableOpacity onPress={this.goToSwipe.bind(this)} style={{position: 'absolute', right: -160}}>
             <Image style={styles.bookIcon} source={require('../../assets/hard-cover-book.png')} />
           </TouchableOpacity>
         </View>
@@ -40,7 +58,7 @@ class MyProfile extends Component {
           </TouchableOpacity>
           <View style={styles.nameContainer}>
             <Text style={styles.name}>{faceBookInfo.name.split(' ')[0]} </Text>
-            <Text style={styles.age}>| 22</Text>
+            <Text style={styles.age}>| {faceBookInfo.age}</Text>
           </View>
         </View>
 
@@ -48,12 +66,12 @@ class MyProfile extends Component {
         <View style={styles.infoContainer}>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>San Diego, CA</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookObj.location.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>University of San Diego</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookInfo.school[0].school.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
@@ -206,4 +224,4 @@ const mapStateToProps = state => ({
   faceBookInfo: state.FacebookDataReducer.faceBookInfo
 })
 
-export default connect(mapStateToProps, null)(MyProfile)
+export default connect(mapStateToProps, actions)(MyProfile)

@@ -193,7 +193,7 @@ class SwipeCards extends Component {
                       : null
                     )
                 }
-                <View style={{position: 'relative', bottom: 15}}>
+                {/*<View style={{position: 'relative', bottom: 15}}>
                   <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style={styles.nopeButton}>
                       <Image style={{height: 20, width: 20}} source={require('../../assets/cancel.png')} />
@@ -202,7 +202,7 @@ class SwipeCards extends Component {
                       <Image style={{height: 23, width: 23}} source={require('../../assets/book.png')} />
                     </TouchableOpacity>
                   </View>
-                </View>
+                </View>*/}
             </View>
     )
   }

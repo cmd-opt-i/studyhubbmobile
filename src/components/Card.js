@@ -16,6 +16,7 @@ class Card extends Component {
   }
 
   render() {
+    console.log('props from card', this.props);
     return (
       <View style={styles.card}>
 
@@ -49,6 +50,7 @@ class Card extends Component {
 
 const styles = StyleSheet.create({
   card: {
+    marginBottom: 20,
     flex: 1,
     backgroundColor: '#ffffff',
     borderRadius: 2,

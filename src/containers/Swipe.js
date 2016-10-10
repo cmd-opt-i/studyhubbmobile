@@ -42,14 +42,16 @@ class Swipe extends Component {
   }
 
   componentWillMount() {
+    console.log('hit cwm');
     this.props.isFetching(true)
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
   componentWillReceiveProps(nextProps) {
     console.log('nextProps', nextProps);
-    nextProps.allUsers ? this.unshiftSwipes(nextProps.faceBookInfo.newSwipes, nextProps.allUsers) : null
+    nextProps.allUsers && nextProps.faceBookInfo.newSwipes ? this.unshiftSwipes(nextProps.faceBookInfo.newSwipes, nextProps.allUsers) : null
   }
+
     unshiftSwipes(swipes, allUsers) {
       const { setAllUsers, unShift, faceBookInfo } = this.props
       const myID = faceBookInfo.faceBookInfo.id
@@ -58,6 +60,8 @@ class Swipe extends Component {
 
       if (unShift) {
         allUsers.forEach(user => {
+          console.log('all users for each', user);
+          console.log('swipes', swipes);
           let ID = user.info.faceBookInfo.id
           if (swipes[ID]) {
             swipesToBeUnShifted.push(user)
@@ -67,12 +71,14 @@ class Swipe extends Component {
         })
 
         swipesToBeUnShifted.forEach(user => {
+          console.log('unshifte fordwach');
           const theirID = user.info.faceBookInfo.id
           firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
             .then(() => console.log('successfully removed'))
             .catch(err => console.log('err', err))
           result.unshift(user)
         })
+        console.log('result', result);
         setAllUsers(result, true)
       } else {
         console.log('eat ass');
@@ -148,6 +154,10 @@ class Swipe extends Component {
             //stre their id in myswipes
             firebaseApp.database().ref(`/users/${myID}/swipes`).update({
               [theirID]: theirID
+            })
+
+            firebaseApp.database().ref(`/users/${theirID}/newSwipes`).update({
+              [myID]: myID
             })
           }
         })

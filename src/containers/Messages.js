@@ -10,12 +10,14 @@ class Messages extends Component {
   constructor (props) {
     super(props)
     this._messages = []
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
     this.state = {
       keyboardOffset: new Animated.Value(0),
       messages: this._messages,
       message: '',
       messageID: '',
+      dataSource: ds.cloneWithRows([''])
     }
   }
 
@@ -78,10 +80,12 @@ class Messages extends Component {
   }
 
   setMessages(messages) {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     this._messages = messages;
 
     this.setState({
       messages: messages,
+      dataSource: ds.cloneWithRows(messages)
     });
   }
 
@@ -94,6 +98,7 @@ class Messages extends Component {
     if (this.state.message === '') {
       console.log('do nothing');
     } else {
+      console.log(index);
       firebaseApp.database().ref(`/conversations/${this.state.messageID}`).update({
         [index]: {
           sender: this.props.faceBookInfo.id,
@@ -105,27 +110,29 @@ class Messages extends Component {
     }
   }
 
-  messageBox (message, index) {
-    if (message.sender === this.props.faceBookInfo.id) {
+  messageBox (message) {
+
+    console.log('message', message);
+    if (message.sender === this.props.faceBookInfo.id && message.sender) {
       return (
-        <View key={index} style={styles.sentMessageBox}>
+        <View style={styles.sentMessageBox}>
           <Text style={styles.sentText}>{message.text}</Text>
         </View>
       )
+    } else if (message.sender) {
+        return (
+            <View style={styles.receivedMessageBox}>
+              <Text style={styles.recivedText}>{message.text}</Text>
+            </View>
+        )
     }
-
-    return (
-        <View key={index} style={styles.receivedMessageBox}>
-          <Text style={styles.recivedText}>{message.text}</Text>
-        </View>
-    )
-
+    return <View></View>
   }
 
   render () {
     const { currentStudyBuddy } = this.props
     const { messages } = this.state
-
+    console.log(currentStudyBuddy.name.split(' ')[0]);
     console.log('state', this.state);
     return (
       <View style={styles.container}>
@@ -135,14 +142,16 @@ class Messages extends Component {
               <Image source={require('../../assets/back.png')} style={styles.backArrow} />
             </TouchableOpacity>
             <Image source={require('../../assets/online-circle.png')} style={styles.onlineCircle} />
-            <Text style={styles.nameText}>{currentStudyBuddy.name}</Text>
+            <Text style={styles.nameText}>{currentStudyBuddy.name.split(' ')[0]}</Text>
             <Image style={styles.profilePic} source={{uri: currentStudyBuddy.picture}}/>
           </View>
-          <ScrollView style={{marginBottom: 55}}>
-            { messages.map((message, index) => {
-              return this.messageBox(message, index)
-            })}
-          </ScrollView>
+          <ListView
+            style={{marginBottom: 55}}
+            dataSource={this.state.dataSource}
+            renderRow={message => (
+              this.messageBox(message)
+            )}
+          />
         </Animated.View>
         <Animated.View style={[styles.chatInputContainer, { bottom: this.state.keyboardOffset, flexDirection: 'row' }]}>
             <TextInput
@@ -152,7 +161,7 @@ class Messages extends Component {
             placeholder={'Your Message'}
             />
             <TouchableOpacity style={styles.sendBtn} onPress={this.handleSend.bind(this)}>
-              <Text>Send</Text>
+              <Text style={{color: 'white'}}>Send</Text>
             </TouchableOpacity>
         </Animated.View>
       </View>

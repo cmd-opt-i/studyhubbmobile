@@ -30,16 +30,31 @@ const swipeRoute = {
   }
 }
 
+const noSchoolRoute = {
+  type: 'push',
+  route: {
+    key: 'noschool',
+    title: 'NoSchool'
+  }
+}
+
 class Login extends Component {
 
   faceBookLogin(handleNavigate, storeUserFBData) {
-    LoginManager.logInWithReadPermissions(['public_profile', 'email'])
+    LoginManager.logInWithReadPermissions(['public_profile', 'email', 'user_location', 'user_education_history'])
       .then(result => {
         result.isCancelled ? console.log('login cancelled') :
         AccessToken.getCurrentAccessToken().then(function(data) {
-
+          console.log('data', data);
           const _responseInfoCallback = (error: ?Object, result: ?Object) => {
             if (error) return console.log(error)
+
+            console.log(result);
+
+            if (!result.education) {
+              handleNavigate(noSchoolRoute)
+              return;
+            }
 
             firebaseApp.database().ref("/users/" + result.id)
               .ref.once('value')
@@ -68,7 +83,7 @@ class Login extends Component {
                 }
               })
           }
-          const infoRequest = new GraphRequest('/me?fields=id,name,email,picture', null, _responseInfoCallback)
+          const infoRequest = new GraphRequest('/me?fields=id,name,location,education,email,picture.width(640)', null, _responseInfoCallback)
           new GraphRequestManager().addRequest(infoRequest).start()
         })
         .catch(res => console.log('infoRequest', res))

@@ -49,14 +49,15 @@ class EditProfile extends Component {
     firebaseApp.database().ref('/users/' + faceBookInfo.id).set({
       id: faceBookInfo.id,
       name: faceBookInfo.name,
+      school: faceBookInfo.education.filter(item => item.type === 'College'),
       age,
       email: faceBookInfo.email,
       major,
       bio,
       gradYear,
       faceBookInfo,
-      swipes: {1234: 'test user'},
-      matches: {1234: 'test user'}
+      swipes: { 1234: 'test user' },
+      matches: { 1234: 'test user' }
     })
 
     AsyncStorage.getItem('on boarding')

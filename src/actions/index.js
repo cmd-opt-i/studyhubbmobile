@@ -59,14 +59,15 @@ export const getAllUsers = id => (
         const result = []
         for(let key in allUsers) {
           if(JSON.parse(allUsers[key].faceBookInfo.id) !== JSON.parse(id)) {
-            result.push({ image: allUsers[key].faceBookInfo.picture, info: allUsers[key] })
+            result.push({ image: allUsers[key].faceBookInfo.picture.data.url, info: allUsers[key] })
+            console.log('passed the push', result);
           }
         }
-
+        console.log('result', result);
         dispatch(isFetching(false))
         dispatch(setAllUsers(result, false))
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log('errr', err))
   )
 )
 

@@ -43,6 +43,13 @@ class Matches extends Component {
         </View>
         <Text style={{color: '#28CF9B', fontSize: 15, fontFamily: 'Tabarra Black', marginTop: 20, marginLeft: 20}}>Study Buddies</Text>
         <ListView
+          ref={ref => this.listView = ref}
+          onLayout={event => {
+            this.listViewHeight = event.nativeEvent.layout.height
+          }}
+          onContentSizeChange={() => {
+             this.listView.scrollTo({y: this.listView.getMetrics().contentLength - this.listViewHeight})
+           }}
           style={{marginTop: 20}}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => (
