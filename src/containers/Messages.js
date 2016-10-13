@@ -1,3 +1,5 @@
+'use strict'
+
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView, ScrollView } from 'react-native'
 const _ = require('lodash');
@@ -62,7 +64,6 @@ class Messages extends Component {
     //get all messages
     firebaseApp.database().ref(`/conversations/${messageID}`)
       .ref.on('child_added', child => {
-        console.log('new child', child.val());
         this.handleReceive({
           sender: child.val().sender,
           date: new Date(child.val().date),
@@ -132,8 +133,6 @@ class Messages extends Component {
   render () {
     const { currentStudyBuddy } = this.props
     const { messages } = this.state
-    console.log(currentStudyBuddy.name.split(' ')[0]);
-    console.log('state', this.state);
     return (
       <View style={styles.container}>
         <Animated.View style={{ flex: 1, bottom: this.state.keyboardOffset }}>

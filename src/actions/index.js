@@ -36,13 +36,11 @@ export const storeUserFBData = (userData) => {
 export const setAllUsers = (users, callUnshift) => {
 
   if (callUnshift) {
-    console.log('second');
     return function (dispatch) {
       dispatch({ type: GET_ALL_USERS, allUsers: users})
       dispatch({ type: UNSHIFT, unShift: false })
     }
   } else {
-    console.log('first');
     return {
       type: GET_ALL_USERS,
       allUsers: users
@@ -60,10 +58,8 @@ export const getAllUsers = id => (
         for(let key in allUsers) {
           if(JSON.parse(allUsers[key].faceBookInfo.id) !== JSON.parse(id)) {
             result.push({ image: allUsers[key].faceBookInfo.picture.data.url, info: allUsers[key] })
-            console.log('passed the push', result);
           }
         }
-        console.log('result', result);
         dispatch(isFetching(false))
         dispatch(setAllUsers(result, false))
       })

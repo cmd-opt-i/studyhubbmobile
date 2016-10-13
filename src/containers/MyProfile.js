@@ -41,7 +41,6 @@ class MyProfile extends Component {
     const { faceBookInfo } = this.props
     const faceBookObj = this.props.faceBookInfo.faceBookInfo
     const profilePic = faceBookInfo.faceBookInfo.picture.data.url
-    console.log('faceBookInfo', faceBookObj);
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>

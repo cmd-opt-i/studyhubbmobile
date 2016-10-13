@@ -16,7 +16,6 @@ class Card extends Component {
   }
 
   render() {
-    console.log('props from card', this.props);
     return (
       <View style={styles.card}>
 

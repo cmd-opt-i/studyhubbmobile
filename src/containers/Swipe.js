@@ -1,11 +1,10 @@
-'use strict';
-//image url https://graph.facebook.com/774635482/picture?width=300&height=300
+'use strict'
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 const _ = require('lodash')
 import * as actions from '../actions'
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import SwipeCards from '../components/SwipeCards'
 import LinearGradient from 'react-native-linear-gradient'
 import Spinner from 'react-native-spinkit'
@@ -42,13 +41,11 @@ class Swipe extends Component {
   }
 
   componentWillMount() {
-    console.log('hit cwm');
     this.props.isFetching(true)
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps', nextProps);
     nextProps.allUsers && nextProps.faceBookInfo.newSwipes ? this.unshiftSwipes(nextProps.faceBookInfo.newSwipes, nextProps.allUsers) : null
   }
 
@@ -60,8 +57,6 @@ class Swipe extends Component {
 
       if (unShift) {
         allUsers.forEach(user => {
-          console.log('all users for each', user);
-          console.log('swipes', swipes);
           let ID = user.info.faceBookInfo.id
           if (swipes[ID]) {
             swipesToBeUnShifted.push(user)
@@ -71,14 +66,12 @@ class Swipe extends Component {
         })
 
         swipesToBeUnShifted.forEach(user => {
-          console.log('unshifte fordwach');
           const theirID = user.info.faceBookInfo.id
           firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
             .then(() => console.log('successfully removed'))
             .catch(err => console.log('err', err))
           result.unshift(user)
         })
-        console.log('result', result);
         setAllUsers(result, true)
       } else {
         console.log('eat ass');

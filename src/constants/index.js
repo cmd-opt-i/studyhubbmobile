@@ -1,8 +1,5 @@
 'use strict'
 
-// key: 5d17919caa2c330dbab13ecd96c135ea1487b153bece500809a8bd06632e6225
-// space id: bk5u40qwn7rs
-
 /* --------- Facebook Data Reducer ----------- */
 export const USER_FB_DATA = 'USER_FB_DATA'
 export const SAVE_USER = 'SAVE_USER'

@@ -1,3 +1,5 @@
+'use strict'
+
 import { connect } from 'react-redux'
 import Root from '../components/Root'
 import { push, pop } from '../actions'
