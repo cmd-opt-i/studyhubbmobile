@@ -1,5 +1,6 @@
 'use strict'
 
+const _ = require('lodash')
 import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT, GET_CURRENT_CARD, CURRENT_STUDY_BUDDY } from '../constants'
 import { firebaseApp } from '../../index.ios'
 
@@ -36,14 +37,16 @@ export const storeUserFBData = (userData) => {
 export const setAllUsers = (users, callUnshift) => {
 
   if (callUnshift) {
+      console.log('users unshift', users);
     return function (dispatch) {
-      dispatch({ type: GET_ALL_USERS, allUsers: users})
+      dispatch({ type: GET_ALL_USERS, allUsers: users })
       dispatch({ type: UNSHIFT, unShift: false })
     }
   } else {
+    console.log('users', users);
     return {
       type: GET_ALL_USERS,
-      allUsers: users
+      allUsers: _.shuffle(users)
     }
   }
 }

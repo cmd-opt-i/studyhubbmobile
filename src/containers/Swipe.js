@@ -50,6 +50,8 @@ class Swipe extends Component {
   }
 
     unshiftSwipes(swipes, allUsers) {
+
+      console.log('hit unshifht swipes');
       const { setAllUsers, unShift, faceBookInfo } = this.props
       const myID = faceBookInfo.faceBookInfo.id
       const swipesToBeUnShifted = []
@@ -65,13 +67,14 @@ class Swipe extends Component {
           }
         })
 
-        swipesToBeUnShifted.forEach(user => {
+        console.log('swupes to be unshinfted', swipesToBeUnShifted)
+        const shuffledSwipes = _.shuffle(swipesToBeUnShifted)
+
+        shuffledSwipes.forEach(user => {
           const theirID = user.info.faceBookInfo.id
-          firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
-            .then(() => console.log('successfully removed'))
-            .catch(err => console.log('err', err))
           result.unshift(user)
         })
+
         setAllUsers(result, true)
       } else {
         console.log('eat ass');
@@ -84,6 +87,10 @@ class Swipe extends Component {
     const myID = this.props.faceBookInfo.id
     const theirID = card.info.faceBookInfo.id
     const myData = this.props.faceBookInfo
+
+    firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
+      .then(() => console.log('successfully removed'))
+      .catch(err => console.log('err', err))
 
     if (card.info.swipes[myID]) {
       //add their info to my shit
@@ -164,6 +171,10 @@ class Swipe extends Component {
   handleNope (card) {
     const theirID = card.info.faceBookInfo.id
     const myID = this.props.faceBookInfo.id
+
+    firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
+      .then(() => console.log('successfully removed'))
+      .catch(err => console.log('err', err))
 
     firebaseApp.database().ref(`/users/${theirID}/swipes/${myID}`).remove()
     //check if my id is in their swipes

@@ -88,11 +88,10 @@ class Login extends Component {
         })
         .catch(res => console.log('infoRequest', res))
       })
-      .catch(res => console.log(res))
+      .catch(res => console.log('login failed with error', res))
   }
 
   render() {
-    console.log('hit');
     return (
       <View  style={styles.container}>
         <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
@@ -104,7 +103,7 @@ class Login extends Component {
 
         <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate , this.props.storeUserFBData)}>
+        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate, this.props.storeUserFBData)}>
           <Text style={styles.btnText}>Log in with Facebook</Text>
         </TouchableOpacity>
 
