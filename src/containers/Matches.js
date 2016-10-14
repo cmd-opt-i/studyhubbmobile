@@ -29,11 +29,6 @@ class Matches extends Component {
     this.props.getCurrentStudyBuddy(buddy)
     this.props._handleNavigate(route)
   }
-  matchSearch(input) {
-    this.setState({searchMatch: input});
-    this.setState({dataSource: ds.cloneWithRows(faceBookInfo.matches.filter(buddy => 
-      buddy.toLowerCase().search(this.state.searchMatch.toLowerCase()) !== -1))});
-  }
   render () {
     return (
       <View style={styles.container}>
@@ -44,7 +39,9 @@ class Matches extends Component {
           <Image source={require('../../assets/green-chat.png')} style={styles.chatIcon} />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.searchInput} placeholder={"Study Buddies" value={this.state.searchMatch} onChangeText={this.matchSearch} />
+          <TextInput style={styles.searchInput} placeholder={"Study Buddies" value={this.state.searchMatch} 
+          onChangeText={input => this.setState({searchMatch: input, dataSource: ds.cloneWithRows(faceBookInfo.matches.filter(buddy => 
+      buddy.toLowerCase().search(input.toLowerCase()) !== -1))})} />
         </View>
         <Text style={{color: '#28CF9B', fontSize: 15, fontFamily: 'Tabarra Black', marginTop: 20, marginLeft: 20}}>Study Buddies</Text>
         <ListView
