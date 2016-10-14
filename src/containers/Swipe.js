@@ -106,7 +106,8 @@ class Swipe extends Component {
       firebaseApp.database().ref(`/users/${theirID}/matches/${myID}`).update({
           status: 'new',
           picture: myData.faceBookInfo.picture.data.url,
-          name: myData.faceBookInfo.name
+          name: myData.faceBookInfo.name,
+          id: myID
       })
 
       //remove their id from my swipes

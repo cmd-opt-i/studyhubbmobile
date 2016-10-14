@@ -1,5 +1,3 @@
-'use strict'
-
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView, ScrollView } from 'react-native'
 const _ = require('lodash');
@@ -54,9 +52,16 @@ class Messages extends Component {
     const messages = faceBookInfo.messages
     const theirID = currentStudyBuddy.id
     const myID = faceBookInfo.id
+    let messageID;
 
     //loop throught messages and return the ones === to myID and their id
-    const messageID = _.filter(messages, id => id === `${myID}_${theirID}` || `${theirID}_${myID}`)
+    const match1 = `${myID}_${theirID}`
+    const match2 = `${theirID}_${myID}`
+
+    _.forEach(messages, id => {
+      id === match1 || id === match2 ? messageID = id : null
+    })
+
     this.setState({
       messageID
     })
@@ -113,7 +118,6 @@ class Messages extends Component {
 
   messageBox (message) {
 
-    console.log('message', message);
     if (message.sender === this.props.faceBookInfo.id && message.sender) {
       return (
         <View style={styles.sentMessageBox}>
@@ -133,6 +137,8 @@ class Messages extends Component {
   render () {
     const { currentStudyBuddy } = this.props
     const { messages } = this.state
+    console.log('currentStudyBuddy in messages', currentStudyBuddy);
+    console.log('state', this.state);
     return (
       <View style={styles.container}>
         <Animated.View style={{ flex: 1, bottom: this.state.keyboardOffset }}>
