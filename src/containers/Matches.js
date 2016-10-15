@@ -29,7 +29,16 @@ class Matches extends Component {
     this.props._handleNavigate(route)
   }
 
+  buddyFilter (input, rows) {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    const filteredRows = rows.filter(buddy => buddy.name.toLowerCase().search(input.toLowerCase()) !== -1)
+    this.setState({
+      dataSource: ds.cloneWithRows(input === '' ? _.filter(this.props.faceBookInfo.matches, match => match !== 'test user') : filteredRows)
+    })
+  }
+
   render () {
+    const rows = this.state.dataSource._dataBlob.s1 || []
     return (
       <View style={styles.container}>
         <View style={styles.navIcons}>
@@ -39,17 +48,16 @@ class Matches extends Component {
           <Image source={require('../../assets/green-chat.png')} style={styles.chatIcon} />
         </View>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.searchInput} placeholder={"Study Buddies"} />
+
+        <TextInput
+          style={styles.searchInput}
+          placeholder={"Study Buddies"}
+          onChangeText={input => this.buddyFilter(input, rows)}
+        />
         </View>
         <Text style={{color: '#28CF9B', fontSize: 15, fontFamily: 'Tabarra Black', marginTop: 20, marginLeft: 20}}>Study Buddies</Text>
         <ListView
-          ref={ref => this.listView = ref}
-          onLayout={event => {
-            this.listViewHeight = event.nativeEvent.layout.height
-          }}
-          onContentSizeChange={() => {
-             this.listView.scrollTo({y: this.listView.getMetrics().contentLength - this.listViewHeight})
-           }}
+
           style={{marginTop: 20}}
           dataSource={this.state.dataSource}
           renderRow={(rowData) => (
