@@ -6,8 +6,6 @@ import { View, Text, TouchableOpacity, StyleSheet, ListView, ScrollView, Switch,
 import * as actions from '../actions'
 import { firebaseApp } from '../../index.ios'
 
-const someData = [1,2,3,4,5,6,7,7,8,8,9,9]
-
 const route = {
   type: 'push',
   route: {
@@ -30,6 +28,7 @@ class Settings extends Component {
   signOut() {
     AsyncStorage.removeItem('loggedIn')
     .catch(err => console.log('login', err))
+    this.props.hideLogin(false)
     this.props.popLogin()
   }
 

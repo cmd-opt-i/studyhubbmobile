@@ -2,10 +2,13 @@
 
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native'
+import moment from 'moment'
 import FBSDK from 'react-native-fbsdk'
 import { connect } from 'react-redux'
 import * as actions from '../actions'
+import Spinner from 'react-native-spinkit'
 import { firebaseApp } from '../../index.ios'
+
 
 const {
   LoginManager,
@@ -38,6 +41,14 @@ const noSchoolRoute = {
   }
 }
 
+const noLocationRoute = {
+  type: 'push',
+  route: {
+    key: 'nolocation',
+    title: 'NoLocation'
+  }
+}
+
 class Login extends Component {
 
   faceBookLogin(handleNavigate, storeUserFBData) {
@@ -45,21 +56,28 @@ class Login extends Component {
       .then(result => {
         result.isCancelled ? console.log('login cancelled') :
         AccessToken.getCurrentAccessToken().then(function(data) {
-          console.log('data', data);
           const _responseInfoCallback = (error: ?Object, result: ?Object) => {
             if (error) return console.log(error)
 
-            console.log(result);
+            //use latest school
+            const school = result.education.filter(item => item.type === 'College')
+            const latestSchool = school[school.length - 1]
+            result.education = latestSchool
 
+            // If user doesn't have school in their FB profie  dont let them create a profil
             if (!result.education) {
               handleNavigate(noSchoolRoute)
+              return;
+            }
+            // If user doesn't have location in their FB profie  dont let them create a profil
+            if (!result.location) {
+              handleNavigate(noLocationRoute)
               return;
             }
 
             firebaseApp.database().ref("/users/" + result.id)
               .ref.once('value')
               .then(snapshot => {
-                console.log('from inside login', snapshot.val());
                 if (snapshot.val()) {
                   AsyncStorage.setItem('loggedIn', result.id)
                   .catch(err => console.log('login', err))
@@ -67,18 +85,23 @@ class Login extends Component {
                   storeUserFBData(snapshot.val())
                   handleNavigate(swipeRoute)
                 } else {
-                  var date = new Date() + ''
-                  firebaseApp.database().ref('/users/' + result.id).set({
-                      name: result.name,
-                      fbData: result,
-                      date
-                  })
-                  var faceBookObject = result
-                  faceBookObject.date = date
+
+                  let date = moment().format('MMMM Do YYYY')
+                  const userProfile = {
+                    id: result.id,
+                    name: result.name,
+                    school: { id: result.education.id, name: result.education.school.name },
+                    location: result.location,
+                    picture: result.picture.data.url,
+                    email: result.email,
+                    date
+                  }
+
+                  firebaseApp.database().ref('/users/' + result.id).set(userProfile)
                   AsyncStorage.multiSet([['loggedIn', result.id], ['on boarding', 'true']])
                   .catch(err => console.log('login', err))
 
-                  storeUserFBData(faceBookObject)
+                  storeUserFBData(userProfile)
                   handleNavigate(route)
                 }
               })
@@ -92,21 +115,27 @@ class Login extends Component {
   }
 
   render() {
+    console.log('sf', this.props);
     return (
-      <View  style={styles.container}>
-        <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
+      <View style={styles.container}>
+        { !this.props.hideLoginButton
+          ? <View  style={styles.container}>
 
-        <View style={styles.textContainer}>
-          <Text style={styles.studyText}>Study</Text>
-          <Text style={styles.hubbText}>Hubb</Text>
-        </View>
+              <Image style={styles.image} source={require('../../assets/studyhubblogo.png')} />
 
-        <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
+              <View style={styles.textContainer}>
+                <Text style={styles.studyText}>Study</Text>
+                <Text style={styles.hubbText}>Hubb</Text>
+              </View>
 
-        <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate, this.props.storeUserFBData)}>
-          <Text style={styles.btnText}>Log in with Facebook</Text>
-        </TouchableOpacity>
+              <Text style={styles.studyBuddyText}>Find Your Study Buddy</Text>
 
+              <TouchableOpacity style={styles.btn} onPress={this.faceBookLogin.bind(null, this.props._handleNavigate, this.props.storeUserFBData)}>
+                <Text style={styles.btnText}>Log in with Facebook</Text>
+              </TouchableOpacity>
+            </View>
+          : <View style={styles.spinner}><Spinner isVisible={true} size={100} color={'#F4F4F4'} type={'ChasingDots'}/></View>
+        }
       </View>
     )
   }
@@ -122,6 +151,11 @@ const styles = StyleSheet.create({
     marginTop: 150,
     width: 100,
     height: 150
+  },
+  spinner: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   textContainer: {
     flexDirection: 'row'
@@ -159,4 +193,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(null, actions)(Login)
+const mapStateToProps = state => ({
+  hideLoginButton: state.UIReducer.hideLoginButton
+})
+
+export default connect(mapStateToProps, actions)(Login)

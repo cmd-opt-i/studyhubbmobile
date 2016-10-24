@@ -42,6 +42,7 @@ class Swipe extends Component {
 
   componentWillMount() {
     this.props.isFetching(true)
+    console.log(this.props.faceBookInfo.id);
     this.props.getAllUsers(this.props.faceBookInfo.id)
   }
 
@@ -51,15 +52,14 @@ class Swipe extends Component {
 
     unshiftSwipes(swipes, allUsers) {
 
-      console.log('hit unshifht swipes');
       const { setAllUsers, unShift, faceBookInfo } = this.props
-      const myID = faceBookInfo.faceBookInfo.id
+      const myID = faceBookInfo.id
       const swipesToBeUnShifted = []
       const result = []
 
       if (unShift) {
         allUsers.forEach(user => {
-          let ID = user.info.faceBookInfo.id
+          let ID = user.info.id
           if (swipes[ID]) {
             swipesToBeUnShifted.push(user)
           } else {
@@ -67,11 +67,10 @@ class Swipe extends Component {
           }
         })
 
-        console.log('swupes to be unshinfted', swipesToBeUnShifted)
         const shuffledSwipes = _.shuffle(swipesToBeUnShifted)
 
         shuffledSwipes.forEach(user => {
-          const theirID = user.info.faceBookInfo.id
+          const theirID = user.info.id
           result.unshift(user)
         })
 
@@ -85,7 +84,7 @@ class Swipe extends Component {
 
   checkForMatch(card) {
     const myID = this.props.faceBookInfo.id
-    const theirID = card.info.faceBookInfo.id
+    const theirID = card.info.id
     const myData = this.props.faceBookInfo
 
     firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()
@@ -97,7 +96,7 @@ class Swipe extends Component {
       firebaseApp.database().ref(`/users/${myID}/matches/${theirID}`).update({
           status: 'new',
           picture: card.image,
-          name: card.info.faceBookInfo.name,
+          name: card.info.name,
           id: theirID
           //this is where we send the push notification
           // or do a cool modal or somethin
@@ -105,8 +104,8 @@ class Swipe extends Component {
       //add my info to their shit
       firebaseApp.database().ref(`/users/${theirID}/matches/${myID}`).update({
           status: 'new',
-          picture: myData.faceBookInfo.picture.data.url,
-          name: myData.faceBookInfo.name,
+          picture: myData.picture,
+          name: myData.name,
           id: myID
       })
 
@@ -170,7 +169,8 @@ class Swipe extends Component {
   }
 
   handleNope (card) {
-    const theirID = card.info.faceBookInfo.id
+    console.log('card from nope', card)
+    const theirID = card.info.id
     const myID = this.props.faceBookInfo.id
 
     firebaseApp.database().ref(`/users/${myID}/newSwipes/${theirID}`).remove()

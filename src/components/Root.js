@@ -15,6 +15,7 @@ import Messages from '../containers/Messages'
 import Settings from '../containers/Settings'
 import EditProfile from '../containers/EditProfile'
 import NoSchool from '../components/NoSchool'
+import NoLocation from '../components/NoLocation'
 import { firebaseApp } from '../../index.ios'
 
 const swipeRoute = {
@@ -35,6 +36,7 @@ class Root extends Component {
   _renderScene (props) {
     const { route } = props.scene
     if (route.key === 'noschool') return <NoSchool _goBack={this._handleBackAction.bind(this)} />
+    if (route.key === 'nolocation') return <NoLocation _goBack={this._handleBackAction.bind(this)} />
     if (route.key === 'editprofile') return <EditProfile _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'login') return <Login _handleNavigate={this._handleNavigate.bind(this)} />
     if (route.key === 'settings') return <Settings _goback={this._handleBackAction.bind(this)} _handleNavigate={this._handleNavigate.bind(this)} />
@@ -69,8 +71,8 @@ class Root extends Component {
   componentWillMount() {
       AsyncStorage.getItem('loggedIn')
         .then(data => {
-          console.log('this is item loggedIn from root', data);
           if (data) {
+            this.props.hideLogin(true);
             firebaseApp.database().ref("/users/" + data)
               .ref.once('value')
               .then(snapshot => {

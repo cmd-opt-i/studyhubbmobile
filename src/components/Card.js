@@ -16,6 +16,7 @@ class Card extends Component {
   }
 
   render() {
+    console.log('currentCard', this.props.info);
     return (
       <View style={styles.card}>
 
@@ -24,17 +25,17 @@ class Card extends Component {
         </TouchableOpacity>
 
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.nameText}>{this.props.info.faceBookInfo.name} </Text><Text style={styles.ageText}>| {this.props.info.age}</Text>
+          <Text style={styles.nameText}>{this.props.info.name.split(' ')[0]} </Text><Text style={styles.ageText}>| {this.props.info.age}</Text>
         </View>
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-          <Text style={{color: '#344145'}}>{this.props.info.faceBookInfo.location.name}</Text>
+          <Text style={{color: '#344145'}}>{this.props.info.location.name}</Text>
         </View>
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
           <Image style={{height: 20, width: 20, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-          <Text style={{color: '#344145'}}>{this.props.info.school[0].school.name}</Text>
+          <Text style={{color: '#344145'}}>{this.props.info.school.name}</Text>
         </View>
 
         <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>

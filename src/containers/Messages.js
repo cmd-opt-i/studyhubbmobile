@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Image, Text, StyleSheet, TextInput, DeviceEventEmitter, Animated, Keyboard, ListView, ScrollView } from 'react-native'
-const _ = require('lodash');
+const _ = require('lodash')
+import moment from 'moment'
 import { firebaseApp } from '../../index.ios'
 import { connect } from 'react-redux'
 import * as actions from "../actions/index"
@@ -71,7 +72,7 @@ class Messages extends Component {
       .ref.on('child_added', child => {
         this.handleReceive({
           sender: child.val().sender,
-          date: new Date(child.val().date),
+          date: child.val().date,
           text: child.val().text
         })
       })
@@ -102,14 +103,12 @@ class Messages extends Component {
   handleSend(message = {}) {
     const index = this.state.messages.length - 1
     if (this.state.message === '') {
-      console.log('do nothing');
     } else {
-      console.log(index);
       firebaseApp.database().ref(`/conversations/${this.state.messageID}`).update({
         [index]: {
           sender: this.props.faceBookInfo.id,
           text: this.state.message,
-          date: new Date().getTime()
+          date: moment().format("dddd,MMMM Do YYYY,h:mm:ss a")
         }
       })
       this.setState({ message: ''})

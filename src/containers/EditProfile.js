@@ -23,6 +23,8 @@ class EditProfile extends Component {
   constructor(props) {
     super(props)
 
+    //set the initial state first we check if the values exist in props
+    //if they do then use those as state
     this.state = {
       keyboardOffset: new Animated.Value(0),
       major: this.props.faceBookInfo.major || '',
@@ -45,17 +47,18 @@ class EditProfile extends Component {
     const { major, bio, gradYear, age } = this.state
     const { faceBookInfo, storeUserFBData } = this.props
 
-    console.log('faceBookInfo from editprofile', faceBookInfo);
     firebaseApp.database().ref('/users/' + faceBookInfo.id).set({
       id: faceBookInfo.id,
       name: faceBookInfo.name,
-      school: faceBookInfo.education.filter(item => item.type === 'College'),
+      school: faceBookInfo.school,
       age,
       email: faceBookInfo.email,
       major,
       bio,
       gradYear,
-      faceBookInfo,
+      date: faceBookInfo.date,
+      location: faceBookInfo.location,
+      picture: faceBookInfo.picture,
       swipes: { 1234: 'test user' },
       matches: { 1234: 'test user' }
     })
