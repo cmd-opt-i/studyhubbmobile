@@ -6,19 +6,18 @@ import { connect } from 'react-redux'
 
 class Profile extends Component {
   render() {
-    console.log('props from profile', this.props);
     const { currentCard } = this.props
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
-          <TouchableOpacity onPress={this.props._goBack}>
+          <TouchableOpacity style={styles.btn} onPress={this.props._goBack}>
             <Image style={styles.closeIcon} source={require('../../assets/back.png')} />
           </TouchableOpacity>
         </View>
         <View style={styles.profilePicContainer}>
-          <Image style={styles.profilePic} source={{uri: currentCard.faceBookInfo.picture.data.url}} />
+          <Image style={styles.profilePic} source={{uri: currentCard.picture}} />
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>{currentCard.faceBookInfo.name} </Text>
+            <Text style={styles.name}>{currentCard.name.split(' ')[0]} </Text>
             <Text style={styles.age}>| {currentCard.age}</Text>
           </View>
         </View>
@@ -26,11 +25,11 @@ class Profile extends Component {
         <View style={styles.infoContainer}>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{currentCard.faceBookInfo.location.name}</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{currentCard.location.name}</Text>
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{currentCard.school[0].school.name}</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{currentCard.school.name}</Text>
           </View>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/diploma.png')} />
@@ -56,9 +55,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 30
   },
+  btn: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 5,
+    marginLeft: -180,
+    height: 50,
+    width: 50
+  },
   closeIcon: {
-    marginTop: 10,
-    marginLeft: -170,
     height: 25,
     width: 25,
   },

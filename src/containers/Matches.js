@@ -90,7 +90,11 @@ const styles = StyleSheet.create({
   },
   bookIconButton: {
     position: 'absolute',
-    left: 28
+    left: 28,
+    height: 30,
+    width: 30,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   bookIcon: {
     height: 28,

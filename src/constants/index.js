@@ -7,6 +7,7 @@ export const UNSHIFT = 'UNSHIFT'
 
 /* --------- UI Reducer ----------- */
 export const IS_FETCHING = 'IS_FETCHING'
+export const HIDE_LOGIN = 'HIDE_LOGIN'
 
 /* --------- Nav Reducer ----------- */
 export const PUSH_ROUTE = 'PUSH_ROUTE'

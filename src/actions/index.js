@@ -1,9 +1,8 @@
 'use strict'
 
 const _ = require('lodash')
-import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT, GET_CURRENT_CARD, CURRENT_STUDY_BUDDY } from '../constants'
+import { USER_FB_DATA, IS_FETCHING, PUSH_ROUTE, POP_ROUTE, SEARCH, SAVE_USER, RESET_ROUTE_STATE, GET_ALL_USERS, UNSHIFT, GET_CURRENT_CARD, CURRENT_STUDY_BUDDY, HIDE_LOGIN } from '../constants'
 import { firebaseApp } from '../../index.ios'
-
 
 /* ---------- Navigation Start ---------- */
 export const push = (route) => {
@@ -12,11 +11,6 @@ export const push = (route) => {
     route
   }
 }
-
-export const isFetching = fetching => ({
-    type: IS_FETCHING,
-    fetching
-})
 
 export const pop = () => ({
   type: POP_ROUTE
@@ -59,8 +53,10 @@ export const getAllUsers = id => (
         const allUsers = snapshot.val()
         const result = []
         for(let key in allUsers) {
-          if(JSON.parse(allUsers[key].faceBookInfo.id) !== JSON.parse(id)) {
-            result.push({ image: allUsers[key].faceBookInfo.picture.data.url, info: allUsers[key] })
+          console.log('allUsers frin func', allUsers);
+          if(JSON.parse(allUsers[key].id) !== JSON.parse(id)) {
+            result.push({ image: allUsers[key].picture, info: allUsers[key] })
+            console.log('hit');
           }
         }
         dispatch(isFetching(false))
@@ -85,4 +81,16 @@ export const getCurrentCard = card => ({
 export const getCurrentStudyBuddy = buddy => ({
   type: CURRENT_STUDY_BUDDY,
   currentStudyBuddy: buddy
+})
+
+/* ---------- UI ---------- */
+
+export const isFetching = fetching => ({
+    type: IS_FETCHING,
+    fetching
+})
+
+export const hideLogin = show => ({
+  type: HIDE_LOGIN,
+  show: show
 })

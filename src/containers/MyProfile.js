@@ -39,8 +39,7 @@ class MyProfile extends Component {
 
   render() {
     const { faceBookInfo } = this.props
-    const faceBookObj = this.props.faceBookInfo.faceBookInfo
-    const profilePic = faceBookInfo.faceBookInfo.picture.data.url
+    const profilePic = faceBookInfo.picture
     return (
       <View style={styles.container}>
         <View style={styles.navIconsContainer}>
@@ -65,12 +64,12 @@ class MyProfile extends Component {
         <View style={styles.infoContainer}>
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/earth-globe.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookObj.location.name}</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookInfo.location.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10}}>
             <Image style={{height: 15, width: 15, marginRight: 10}} source={require('../../assets/gradcap.png')} />
-            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookInfo.school[0].school.name}</Text>
+            <Text style={{color: '#344145', fontSize: 10, fontWeight: '300'}}>{faceBookInfo.school.name}</Text>
           </View>
 
           <View style={{flexDirection: 'row', position: 'relative', left: 10, marginTop: 10, marginBottom: 15}}>
