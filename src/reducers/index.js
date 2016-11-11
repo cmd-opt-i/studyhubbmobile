@@ -3,7 +3,7 @@
 import { combineReducers } from 'redux'
 import UIReducer from './UIReducer'
 import NavReducer from './NavReducer'
-import FirebaseReducer from './FirebaseReducer'
+import FirebaseReducer from './firebaseReducer'
 import FacebookDataReducer from './FacebookDataReducer'
 import CardReducer from './CardReducer'
 
