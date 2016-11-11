@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   gray: {
     backgroundColor: 'transparent',
     color: '#C8CCCF',
-    fontFamily: 'Tabarra NarrowLight'
+    // fontFamily: 'Tabarra NarrowLight'
   },
   btn: {
     justifyContent: 'center',

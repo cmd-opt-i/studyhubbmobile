@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: 28,
     color: 'white',
-    fontFamily: 'Tabarra NarrowLight'
+    // fontFamily: 'Tabarra NarrowLight'
   },
   hubbText: {
     backgroundColor: 'transparent',
