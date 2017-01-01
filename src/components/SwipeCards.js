@@ -170,7 +170,7 @@ class SwipeCards extends Component {
                         <Animated.View style={[this.props.nopeStyle, animatedNopeStyles]}>
                             {this.props.noView
                                 ? this.props.noView
-                                : <Text style={this.props.nopeTextStyle}>{this.props.noText ? this.props.noText : "Nope!"}</Text>
+                                : <Text style={this.props.nopeTextStyle}>{this.props.noText ? this.props.noText : "X"}</Text>
                             }
                         </Animated.View>
                         )
@@ -186,7 +186,7 @@ class SwipeCards extends Component {
                         <Animated.View style={[this.props.yupStyle, animatedYupStyles]}>
                             {this.props.yupView
                                 ? this.props.yupView
-                                : <Text style={this.props.yupTextStyle}>{this.props.yupText? this.props.yupText : "Yup!"}</Text>
+                                : <Image style={styles.bookIcon} source={require('../../assets/hard-cover-book.png')} />
                             }
                         </Animated.View>
                       )
@@ -209,6 +209,10 @@ class SwipeCards extends Component {
 }
 
 var styles = StyleSheet.create({
+    bookIcon: {
+      height: 26,
+      width: 26
+    },
     container: {
       flex: 1,
       justifyContent: 'center',
