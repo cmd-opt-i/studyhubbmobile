@@ -1,3 +1,9 @@
+/*
+  Refactor Notes:
+  - seperate all reducers into:
+    - navigation, firebase, cards, global
+*/
+
 'use strict'
 
 const _ = require('lodash')
