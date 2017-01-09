@@ -24,6 +24,9 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1A85EBC8BDB04F6F855F9230 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5070FF8F00AA422288C96BE3 /* libRCTFBSDK.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A6FC623A1E233A94003F2214 /* libAppHub.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FC62231E2339A3003F2214 /* libAppHub.a */; };
+		A6FC623C1E233A9E003F2214 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FC623B1E233A9E003F2214 /* SystemConfiguration.framework */; };
+		A6FC623E1E233AA9003F2214 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A6FC623D1E233AA9003F2214 /* libz.tbd */; };
 		C24CB815DE7546EAACE36337 /* libRNSpinkit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */; };
 		F07B19651D7119A400B04302 /* tabarra.black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19641D7119A400B04302 /* tabarra.black.ttf */; };
 		F07B19661D7119A400B04302 /* tabarra.black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F07B19641D7119A400B04302 /* tabarra.black.ttf */; };
@@ -113,6 +116,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
+		};
+		A6FC62221E2339A3003F2214 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6FC621B1E2339A2003F2214 /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3AF1B37AC8D0064F175;
+			remoteInfo = AppHub;
+		};
+		A6FC62241E2339A3003F2214 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6FC621B1E2339A2003F2214 /* AppHub.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555FF3BA1B37AC8D0064F175;
+			remoteInfo = AppHubTests;
 		};
 		F04E8E7B1D66C3EB00CEE05E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -213,6 +230,9 @@
 		6BD84BE7C5FB4EB6B5652C9B /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A6FC621B1E2339A2003F2214 /* AppHub.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AppHub.xcodeproj; path = ../node_modules/apphub/AppHub/AppHub.xcodeproj; sourceTree = "<group>"; };
+		A6FC623B1E233A9E003F2214 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A6FC623D1E233AA9003F2214 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		AF9FCCFBAE1C4C21A1109BFD /* libRNSpinkit.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSpinkit.a; sourceTree = "<group>"; };
 		F07B19641D7119A400B04302 /* tabarra.black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.black.ttf; path = ../../../Downloads/tabarra.black.ttf; sourceTree = "<group>"; };
 		F07B19731D7119B200B04302 /* tabarra.narrowlight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = tabarra.narrowlight.ttf; path = ../../../Downloads/tabarra.narrowlight.ttf; sourceTree = "<group>"; };
@@ -235,6 +255,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FC623E1E233AA9003F2214 /* libz.tbd in Frameworks */,
+				A6FC623C1E233A9E003F2214 /* SystemConfiguration.framework in Frameworks */,
+				A6FC623A1E233A94003F2214 /* libAppHub.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				F2A1990E1E19892500D34DE4 /* FBSDKShareKit.framework in Frameworks */,
@@ -370,6 +393,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A6FC621B1E2339A2003F2214 /* AppHub.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -420,6 +444,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A6FC621C1E2339A2003F2214 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6FC62231E2339A3003F2214 /* libAppHub.a */,
+				A6FC62251E2339A3003F2214 /* AppHub.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F04E8E761D66C3EB00CEE05E /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +472,8 @@
 		F04E8E8A1D66C46100CEE05E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A6FC623D1E233AA9003F2214 /* libz.tbd */,
+				A6FC623B1E233A9E003F2214 /* SystemConfiguration.framework */,
 				F2A199071E19892500D34DE4 /* Bolts.framework */,
 				F2A199081E19892500D34DE4 /* FBSDKCoreKit.framework */,
 				F2A199091E19892500D34DE4 /* FBSDKLoginKit.framework */,
@@ -505,11 +540,13 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 746ML7MNVM;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 3976PLW6ZC;
+						DevelopmentTeam = 746ML7MNVM;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -525,6 +562,10 @@
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = A6FC621C1E2339A2003F2214 /* Products */;
+					ProjectRef = A6FC621B1E2339A2003F2214 /* AppHub.xcodeproj */;
+				},
 				{
 					ProductGroup = F04E8E761D66C3EB00CEE05E /* Products */;
 					ProjectRef = 6BD84BE7C5FB4EB6B5652C9B /* BVLinearGradient.xcodeproj */;
@@ -655,6 +696,20 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6FC62231E2339A3003F2214 /* libAppHub.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAppHub.a;
+			remoteRef = A6FC62221E2339A3003F2214 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6FC62251E2339A3003F2214 /* AppHub.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AppHub.xctest;
+			remoteRef = A6FC62241E2339A3003F2214 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		F04E8E7C1D66C3EB00CEE05E /* libBVLinearGradient.a */ = {
@@ -814,8 +869,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 746ML7MNVM;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -836,9 +892,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 746ML7MNVM;
 				INFOPLIST_FILE = studyhubbmobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -858,6 +915,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 746ML7MNVM;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Documents/FacebookSDK\"";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -866,6 +924,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = studyhubbmobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
@@ -875,8 +934,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.StudyHubb;
 				PRODUCT_NAME = studyhubbmobile;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -887,6 +948,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 746ML7MNVM;
 				FRAMEWORK_SEARCH_PATHS = "\"$(SRCROOT)/../../../Documents/FacebookSDK\"";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -895,6 +957,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-spinkit/ios/**",
+					"$(SRCROOT)/../node_modules/apphub/AppHub/**",
 				);
 				INFOPLIST_FILE = studyhubbmobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
@@ -904,8 +967,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.StudyHubb;
 				PRODUCT_NAME = studyhubbmobile;
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
